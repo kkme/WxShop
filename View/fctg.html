@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link href="style/zy.css" rel="stylesheet" type="text/css" />
+<meta id="viewport" name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,minimal-ui">
+<script src="js/jquery.js"></script>
+<title>微店</title>
+</head>
+<body>
+<div class="box" style="z-index:1001;">
+	<div class="top">
+    	<a class="tjt" href="index2.html"><img src="images/tjt_03.png"></a>
+        <a class="a1">我要推广</a>
+        <a class="a5" href="#">刷新</a>
+    </div>
+    <div class="baik1">
+        <div class="huijt"><a href="wytg.html"><img src="images/huijt_03.png"></a></div>
+        <div class="huitiao"></div>	
+        <div class="fc">分成推广</div>
+      </div>
+    <div class="yjbl">
+    	<p>你目前设定的佣金比例为3%</p>
+        <div class="fc_bk">
+        	<div class="fc_bk1">
+            	<p>查看报表</p>
+                <a href="fcbb.html"><img src="images/hjt_03.png"></a>
+            </div>
+            <div class="fc_bk1">
+            	<p>修改佣金比例</p>
+                <a href="yjbl.html"><img src="images/hjt_03.png"></a>
+            </div>
+            <div class="fc_bk2">
+            	<p>取消分成推广</p>
+                <a href="#"><img src="images/hjt_03.png"></a>
+            </div>
+        </div>
+        </div>
+</div>
+<div class="qxtg">
+        	<div class="qd">确定取消分成推广？</div>
+            <div class="qdleft">否</div>
+            <div class="qdright"><a href="wytg.html">是</a></div>
+        </div>
+         <script>
+        	$(".fc_bk2").click(function(){$(".qxtg").show(20);
+			                          $(".box").addClass('tm');    
+			})
+        </script>
+        <script>
+        	$(".qdleft").click(function(){$(".qxtg").hide(20);
+			                         $(".box").removeClass('tm');                    
+			})
+        </script>
+</body>
+</html>

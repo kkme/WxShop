@@ -1,0 +1,31 @@
+@charset "utf-8";
+/* CSS Document */
+*{ margin:0; padding:0; list-style:none; text-decoration:none;}
+.wrap{width:100%;height:100%; margin:0 auto; background:url(../images/bj.jpg);}
+.jiantou{ position:absolute;top:45%; right:10px}
+.weidian{ font-family:"方正正粗黑简体"; font-size:40px; color:#6a2e02; padding-top:3%; text-align:center; font-weight:bold;}
+.kuai1,.kuai2,.kuai3,.kuai4,.kuai5{width:80%; margin:0 auto; overflow:hidden;margin-top:3%}
+.kuai1-lf{width:43%;height:120px; border-radius:20px 20px 20px 20px; background-image:url(../images/lv_05.jpg); border:#6a3500 5px solid; float:left; text-align:center}
+.kuai{height:420px; margin-bottom:10%}
+.kuai img{ margin-top:20px;}
+.kuai p{ font-family:"方正黑体简体"; font-size:20px; color:#FFF; text-align:center; margin-top:10px}
+.kuai1-ri{ text-align:center;width:43%;height:120px; border-radius:20px 20px 20px 20px; background-image:url(../images/hong_09.jpg); border:#6a3500 5px solid; float:right}
+.kuai2-lf,.kuai4-lf{ text-align:center;width:43%;height:120px; border-radius:20px 20px 20px 20px; background-image:url(../images/huang_30.jpg); border:#6a3500 5px solid; float:left}
+.kuai2-ri{ text-align:center;width:43%;height:120px; border-radius:20px 20px 20px 20px; background-image:url(../images/zi_33.jpg); border:#6a3500 5px solid; float:right}
+.kuai3-lf{ text-align:center;width:43%;height:120px; border-radius:20px 20px 20px 20px; background-image:url(../images/lan_54.jpg); border:#6a3500 5px solid; float:left}
+.kuai3-ri{ text-align:center;width:43%;height:120px; border-radius:20px 20px 20px 20px; background-image:url(../images/fen_57.jpg); border:#6a3500 5px solid; float:right}
+.footer{ margin-top:3%;overflow:hidden;height:70px;width:100%;}
+.laba{ float:left;width:20%; text-align:center;height:40px; margin-top:5px}
+.dian{float:left;width:60%; text-align:center;height:10px; margin-top:20px}
+.shezhi{float:left;width:20% ;text-align:center;height:40px;margin-top:5px}
+/*yindao*/
+.yindao{width:100%; background-color:#be140c;height:550px;}
+.ywd{ font-family:"方正正粗黑简体"; font-size:26px; text-align:center; color:#FFF;padding-top:5%}
+.kd{ font-family:"迷你简黛玉"; font-size:20px;text-align:center;color:#FFF}
+.yindao img{ margin-left:15%}
+.logo{ margin-top:10%; text-align:center}
+/*index-2*/
+.jiantou2{ position:fixed;top:45%; left:2%}
+.kuai4-ri{ text-align:center;width:43%;height:120px; border-radius:20px 20px 20px 20px; background-image:url(../images/lan_54.jpg); border:#6a3500 5px solid; float:right}
+.kuai5-lf{ text-align:center;width:43%;height:120px; border-radius:20px 20px 20px 20px; background-image:url(../images/zi_33.jpg); border:#6a3500 5px solid; float:left}
+.footer2{  margin-top:3%;width:100%;overflow:hidden;height:70px;}

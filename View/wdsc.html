@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link href="style/zy.css" rel="stylesheet" type="text/css" />
+<meta id="viewport" name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,minimal-ui">
+<script src="js/jquery.js"></script>
+<title>微店</title>
+</head>
+<body>
+<div class="box" style="margin-bottom:51px;">
+	<div class="top">
+    	<a class="tjt" href="index-2.html"><img src="images/tjt_03.png"></a>
+        <a class="a1">我要推广</a>
+        <a class="a5" href="#">刷新</a>
+    </div>
+    <div class="baik">
+    	<div class="huijt"><a href="wdwd1.html"><img src="images/huijt_03.png"></a></div>
+        <div class="huitiao"></div>	
+        <div class="dian"><img src="images/dian_03.png">微店<span class="dian1">我的收藏</span></div>
+      </div>
+      <div class="wdsc_k">
+        	<div class="wdsc_top">
+            	<div class="wdsc_sp"><p class="wdsc_h">商品</p></div>
+                <div class="wdsc_sp"><p>店铺</p></div>
+            </div>
+            <div class="wdsc_bottom" style="display:block">
+            	<div class="wdsc_cpm">
+                	<a href="#"><img src="images/gw_cp_07.png"></a>
+                    <p><a href="#">产品名</a></p>
+                </div>
+                <div class="wdsc_cpm">
+                	<a href="#"><img src="images/gw_cp_07.png"></a>
+                    <p><a href="#">产品名</a></p>
+                </div>
+            </div>
+            <div class="wdsc_bottom">
+            	<div class="wdsc_dpm">
+                	<a href="#"><img src="images/dian.png"></a>
+                    <p><a href="#">店铺名</a></p>
+                </div>
+                <div class="wdsc_dpm">
+                	<a href="#"><img src="images/dian.png"></a>
+                    <p><a href="#">店铺名</a></p>
+                </div>
+            </div>
+            <script>
+$(function(){
+	/*点按钮*/
+	$(".wdsc_sp p").click(function(){
+		/*哪个a？*/
+		var n = $(".wdsc_sp p").index($(this));
+		/*所有内容都隐藏*/
+		$(".wdsc_bottom").hide();
+		/*让对应的内容显示*/
+		$(".wdsc_bottom").eq(n).show();
+		/*所有的按钮都去掉currentA*/
+		$(".wdsc_sp p").removeClass("wdsc_h");
+		/*给点击的按钮加上currentA*/
+		$(this).addClass("wdsc_h");
+	})
+})
+</script>
+
+      </div>
+     <div class="db1">
+       		<ul>
+            	<li><img src="images/fdj.png"></li>
+            	<li class="line"><a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">商品分类</a>
+        <div id="light" class="white_content">该店家暂未设置分类 <a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">关闭</a></div> 
+        <div id="fade" class="black_overlay"></div> </li>
+      			<li class="line"><a href="wdwd1.html">我的微店</a></li>
+      			<li class="line"><a href="gwc.html">购物车</a></li>
+  			</ul>
+            <div class="tb_content">
+            	<div class="search_left">
+                	<a  class="tb_title"></a>
+                </div>
+                <form action="" method="get">
+                	<input  class="block"type="search" placeholder="搜索本店铺商品">
+                    <a class="search">搜索</a> 
+                </form>
+            </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<extend name="Public:registBase"/>
+<block name="content">
+    <div class="box">
+        <div class="top">
+            <a class="tjt" href="__URL__/regist_2.html"><img src="__PUBLIC__/images/tjt_03.png"></a>
+            <a class="a1">设置密码</a>
+            <a class="a2" href="#">下一步</a>
+        </div>
+        <div class="zc1_k"> 
+            <p class="zc3_p1">请设置密码</p>
+            <form action="" method="get">
+            <input class="zc3_mm" type="text" value="请输入6-16位密码" onfocus="if(this.value='请输入6-16位密码') this.value = ''" onblur="if(this.value == '') this.value = '请输入6-16位密码'"  name='pass'/>
+            <input class="zc3_cm" type="text" value="请在重复输入一遍" onfocus="if(this.value='请在重复输入一遍') this.value = ''" onblur="if(this.value == '') this.value = '请在重复输入一遍'"  name='Repeatpass'/>
+            
+            </form>
+        </div>
+    </div>
+</block>
+<block name="js">
+    <script type="text/javascript">
+        $('.a2').click(function(event){
+            event.preventDefault();
+            var pass = $('input[name="pass"]').val();
+            var repeatPass = $('input[name="Repeatpass"]').val();
+            if (pass != repeatPass) {
+                alert('两次输入的密码不相同');
+            }else{
+               if (pass.length<6||pass.length>16) {
+                    alert('密码请在6至16位之间'); 
+               }else{
+                    $.post('__URL__/setPass',{password:pass},function(data){
+                        if (data.status) {
+                            location.href = '__URL__/setPersonDis';
+                        }else{
+                            alert(data.info);
+                        };
+                    });
+               };
+            };
+            
+        });
+
+    </script>
+</block>

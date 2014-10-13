@@ -14,9 +14,8 @@ img{ border:0px;}
 .sousuo{ width:100%; height:50px; background:#ccc;}
 .sousuo1{ width:95%; height:30px; line-height:30px; background:#fff; border:0px; margin:8px 0 0 1%; text-align:center; color:#CCC;}
 .con{ width:100%; height:100px; border-bottom:1px solid #ccc; background:#fff;}
-.con_tb{ float:left; width:70px;margin-left:2%; margin-top:5px;}
-.con_tb img{ border-radius: 49px;}
-.con_wz{ float:left; width:53%; margin-left:10%; margin-top:30px;}
+.con_tb{ float:left; width:70px;margin-left:2%; margin-top:10px;}
+.con_wz{ float:left; width:53%; margin-left:3%; margin-top:20px;}
 .con_wz h1{ float:left; width:100%; line-height:150%; font-size:12px;}
 .con_jt{ float:left; width:30px;margin-top:35px;}
 .con1{ float:left; width:100%; height:50px; border-bottom:1px solid #ccc;}
@@ -27,7 +26,7 @@ img{ border:0px;}
 .con2{ float:left; width:100%; height:auto; background:#ccc; padding-top:15px;}
 .con2_nr{ float:left; width:96%; height:200px;  margin:15px 0 20px 2%; background:#fff;}
 .con2_nr_tb{ float:left; width:70px; margin:20px 0 0 20px;}
-.con2_nr_wz{ float:left; height:120px; margin:10px;}
+.con2_nr_wz{ float:left; width:45%; height:120px; margin:10px;}
 .con2_nr_wz p{ float:left; width:100%; height:100px; line-height:150%; font-size:20px; margin-top:20px;}
 .con2_nr_wz p b{ color:#f00;}
 .con2_nr_jt{ float:left; width:25px; height:73px; margin-top:40px;}

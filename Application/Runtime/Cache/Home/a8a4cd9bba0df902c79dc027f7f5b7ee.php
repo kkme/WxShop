@@ -1,16 +1,26 @@
-<extend name="Public:registBase"/>
-<block name="content">
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head>
+<meta charset="utf-8">
+<title>微店</title>
+<link href="/WxShop/Public/css/zy.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/WxShop/Public/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/WxShop/Public/js/tool.js"></script>
+<meta id="viewport" name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,minimal-ui">
+</head>
+<body>
+
     <div class="box">
     <div class="top">
         <a class="tianxie">填写微店基本信息</a>
         <a class="wancheng" href="zc6.html">完成</a>
     </div>
     <div class="zc1_k"> 
-        <div class="toux"><img src="__PUBLIC__/images/zhaoxiang.png"></div>
-        <div class="renxiang"><img id="avatar" src="__PUBLIC__/images/renxiang_03.png"></div>
+        <div class="toux"><img src="/WxShop/Public/images/zhaoxiang.png"></div>
+        <div class="renxiang"><img id="avatar" src="/WxShop/Public/images/renxiang_03.png"></div>
         <div class="shangc" style="visibility:hidden">正在上传<span>2%</span></div>
 
-        <form action="__URL__/imgUpload" method="post" enctype="multipart/form-data" target="hidden_frame" id="pic">
+        <form action="/WxShop/index.php/Home/Regist/imgUpload" method="post" enctype="multipart/form-data" target="hidden_frame" id="pic">
             <input type="file" name="pic" style="visibility:hidden"/>
             <input type="submit" value="submit" style="visibility:hidden"/>
         </form>
@@ -25,8 +35,8 @@
         
     </div>
     </div>
-</block>
-<block name="js">
+
+
     <script type="text/javascript">
         //点击图片触发文件上传按钮
         $('img').click(function(){
@@ -47,7 +57,7 @@
                     $('.shangc').css("visibility","hidden");
                     clearInterval(time);
                     //向服务器端获取这个图片在服务器上的位置
-                    $.post('__URL__/imgResponse',function(data){
+                    $.post('/WxShop/index.php/Home/Regist/imgResponse',function(data){
                         if (data == '') {
                             alert('未知错误,错误代码:005');
                         }else{
@@ -66,13 +76,16 @@
                 alert('请填写正确的商家名和商家简介');
                 return 0;
             };
-            $.post('__URL__/setStorePro',{title:title,intro:intro},function(data){
+            $.post('/WxShop/index.php/Home/Regist/setStorePro',{title:title,intro:intro},function(data){
                 if (data.status) {
-                    location.href = "{:U('Home/Store/shopDis')}";
+                    location.href = "<?php echo U('Home/Store/shopDis');?>";
                 }else{
                     alert(data.info);
                 };
             });
         });
     </script>
-</block>
+
+</div>
+</body>
+</html>

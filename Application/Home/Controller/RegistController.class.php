@@ -106,11 +106,125 @@
 		 * 注册第四步，填写基本信息
 		 */
 		//设置基本信息显示页面
-		public function setPersonDis(){
-			$auth = session('auth');	
+		public function setPersonDis(){	
 			$this->display('regist_4');
 		}
+		//设置基本信息处理函数
+		public function setPersonPro(){
+			$auth = session('auth');
+			$data['id'] = $auth['store_id'];
+			$data['shoper_name'] = I('post.shoper_name');
+			$data['shoper_ID'] = I('post.shoper_ID');
+			$data['address'] = I('post.address');
+			$data['time'] = time();
+			$is_up = M('Store')->save($data);
+			if (!$is_up) {
+				$ret['status'] = false;
+				$ret['info'] = '未知错误，错误代码：004，请联系客服解决';
+				goto end;
+			}
+			$ret['status'] = true;
+			$ret['info'] = '修改商家信息成功';
+			end:
+			$this->ajaxReturn($ret);
+		}
 
+		/**
+		 * 注册第五步，添加商店信息
+		 */
+		
+		//图片上传
+		public function imgUpload(){
+			$upload = new \Think\Upload();// 实例化上传类
+		    $upload->maxSize   =     3145728 ;// 设置附件上传大小
+		    $upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
+		    $upload->savePath  =     './avatar/';// 设置附件上传目录,Uploads目录下
+		    $upload->autoSub   =     false; //使用子目录上传
+		    // 上传文件 
+		    $info   =   $upload->uploadOne($_FILES['pic']);
+		    $path = $info['savepath'].$info['savename'];
+		    //　将头像图片存入数据库
+		    $auth = session('auth');
+		    $data['id'] = $auth['store_id'];
+		    $data['avatar'] = $info['savename'];
+		    $data['time'] = time();
+		    M('Store')->save($data);
+		    //　剪裁图片
+		    $this->imgCut("./Uploads/avatar/".$info['savename']);
+		}
+
+		//对图片进行缩略，并强制控制大小
+		public function imgCut($imgPath){
+			$image = new \Think\Image(); 
+			$image->open($imgPath);
+			$image->thumb(93, 93,\Think\Image::IMAGE_THUMB_FIXED)->save($imgPath);
+		}
+
+		// 对前端头像图片请求进行响应
+		public function imgResponse(){
+			$auth = session('auth');
+			$data['id'] = $auth['store_id'];
+			$store = M('Store')->where($data)->find();
+			$this->ajaxReturn($store['avatar']);
+		}
+
+		//　处理商家信息
+		public function setStorePro(){
+			$auth = session('auth');
+			$data['id'] = $auth['store_id'];
+			$data['title'] = I('post.title');
+			$data['intro'] = I('post.intro');
+			$is_up = M('Store')->save($data);
+			if (!is_up) {
+				$ret['status'] = false;
+				$ret['info'] = '未知错误，错误代码：006，请联系客服解决';
+				goto end;
+			}
+			//初始化第一件商品
+			$goods['store_id'] = $auth['store_id'];
+			$goods['name'] = '自动添加的商品，请删除';
+			$goods['type_id'] = 0;
+			$goods['originalPrice'] = 9.9;
+			$goods['retailPrice'] = 9.9;
+			$goods['headerImg'] = 'example.jpg';
+			$goods['description'] = '这是系统自动添加的商品，请及时删除';
+			$goods['quantity'] = 7;
+			$goods['remainingQuantity'] = 1;
+			$goods['time'] = time();
+			$goods['status'] = 1;
+			$is_goods_add = M('Goods')->add($goods);
+			if (!$is_goods_add) {
+				$ret['status'] = false;
+				$ret['info'] = '未知错误，错误代码：007 请联系客服解决';
+				goto end;
+			}
+
+			$ret['status'] = true;
+			$ret['info'] = '添加微店基本信息成功';
+			$store = M('Store')->where(array('id'=>$data['id']))->find();
+			session('store',$store);
+			end:
+			$this->ajaxReturn($ret);
+		}
+
+		/**
+		 * 用户登陆处理
+		 */
+		public function loginPro(){
+			$data['shoper_phone'] = I('shoper_phone');
+			$data['password'] = I('password','','md5');
+			$store = M('Store')->where($data)->find();
+			if (empty($store)) {
+				$ret['status'] = false;
+				$ret['info'] = '用户名或密码错误';
+				goto end;
+			}
+				$ret['status'] = true;
+				$ret['info'] = '用户登陆成功';
+				session('store',$store);
+			end:
+			$this->ajaxReturn($ret);
+		}
 
 		/**
 		 * 发送短信函数
@@ -125,15 +239,10 @@
 		 * 测试函数
 		 */
 		public function test(){
-			$a = 11;
-			if ($a > 10) goto a;
-			else goto b;
-			
-			b:
-			echo "小于１０";
-
-			a:
-			echo "大于１０";
+			// $auth = session('auth');
+			// var_dump($auth);
+			$avatar_path = cookie('avatar_path');
+			var_dump($avatar_path);
 		}
 	}
 

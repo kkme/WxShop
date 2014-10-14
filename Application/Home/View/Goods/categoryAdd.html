@@ -23,7 +23,7 @@
 	<div class="top">
     	<div class="top1"><a href="{:U('Home/Goods/goodsAddDis')}"><img src="__PUBLIC__/images/tjt_03.png"></a></div>
         <div class="top2">添加分类</div>
-        <div class="top3"><a  href="#">完成</a></div>
+        <div class="top3"><a  href="{:U('Home/Goods/goodsAddDis')}">完成</a></div>
     </div>
 	<div class="bj1_k">
         <volist name="cat" id="vo">
@@ -56,6 +56,14 @@
             });
             $('a[name="delete"]').click(function(event){
                 event.preventDefault();
+                var cat_id = $(this).attr('target');
+                $.post('__URL__/categoryDelPro',{cat_id:cat_id},function(data){
+                    if (data.status) {
+                        location.reload();
+                    }else{
+                        alert(data.info);
+                    };
+                });
             });
         </script>
         

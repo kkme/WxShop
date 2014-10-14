@@ -6,6 +6,8 @@
 <title>我的微店</title>
 <meta name="description" content="">
 <meta name="keywords" content="">
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/tool.js"></script>
 <link href="__PUBLIC__/css/weidian.css" rel="stylesheet" type="text/css">
 <style type="text/css">
     /*编辑商品*/
@@ -31,19 +33,25 @@
     </div>
     <div class="bj2_k">
     	<div class="bj2_1">
-     	<img src="__PUBLIC__/images/kuang_16.png">
+     	<img src="__PUBLIC__/images/kuang_16.png" id="addImg">
+        <span id="processShow" style="display:none">0%</span>
     </div>
+    <form action="__URL__/imgUpload" method="post" enctype="multipart/form-data" target="hidden_frame" id="pic">
+            <input type="file" name="pic" style="visibility:hidden"/>
+            <input type="submit" value="submit" style="visibility:hidden"/>
+    </form>
+    <iframe name='hidden_frame' id="hidden_frame" style='display:none'></iframe>
     <div class="tht">
     	<form action="" method="get">
             
-        	<div class="spms"><a>商品名</a><input type="text" name="description" value=""></div>
+        	<div class="spms"><a>商品名</a><input type="text" name="name" value=""></div>
             <div class="spjg"><a>商品描述</a><input type="text" name="description" value=""></div>
             <div class="spjg"><a>商品价格</a><input type="text" name="retailPrice" value=""></div>
             <div class="spkc"><a>商品库存</a><input type="text" name="remainingQuantity" value=""></div>
         </form> 
     </div> 
     <form action="" method="get">
-    <select name="" class="bj2_fl">
+    <select name="type_id" class="bj2_fl">
     	<option value="-1">请选择分类</option>
         <volist name="cat" id="vo">
            <option value="{$vo.id}">{$vo.name}</option>         
@@ -56,8 +64,59 @@
 </div>
 </body>
 <script type="text/javascript">
+  
+
+    $('#addImg').click(function(){
+            $('input[name="pic"]').click();
+    });        
+    // 提交图片之后，自动提交
+    $('input[name="pic"]').change(function(){
+        //模拟点击提交按钮
+        $('input[type="submit"]').click();
+        //显示进度条
+        $('#processShow').removeAttr('style');
+        //模拟进度条，给图片上传争取时间
+        var i = 0;
+        time = setInterval(function(){
+            i++;
+            $('#processShow').text(i+'%');
+            if (i == 100) {
+                $('#processShow').css("visibility","hidden");
+                clearInterval(time);
+                //向服务器端获取这个图片在服务器上的位置
+                $.post('__URL__/imgResponse',function(data){
+                    if (data == '') {
+                        alert('未知错误,错误代码:005');
+                    }else{
+                       $('#processShow').removeAttr('style').html("<img src="+"/WxShop/Uploads/goodsImg/"+data+">");
+                    };
+                });
+            };
+        },50);
+
+    });
+
+    //点击完成，提交所有数据
     $('.top3 a').click(function(event){
         event.preventDefault();
-    });        
+        var name = $("input[name='name']").val();
+        var description = $("input[name='description']").val();
+        var retailPrice = $("input[name='retailPrice']").val();
+        var remainingQuantity = $("input[name='remainingQuantity']").val();
+        var type_id = $("select[name='type_id']").val();
+
+        if (name == '' || description == '' || retailPrice == '' || remainingQuantity == '') {
+            alert('请填写必要的信息');
+            return 0;
+        };
+
+        $.post('__URL__/goodsAddPro',{name:name,description:description,retailPrice:retailPrice,remainingQuantity:remainingQuantity,type_id:type_id},function(data){
+            if (data.status) {
+                location.href = "{:U('Home/Store/shopDis')}";
+            }else{
+                alert(data.info);
+            };
+        });
+    });
 </script>
 </html>

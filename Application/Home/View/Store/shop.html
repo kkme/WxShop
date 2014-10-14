@@ -69,7 +69,7 @@
                   </div>
                 </div>
                 <div class="con2_nr_tj">
-                    <div class="con2_nr_tj_nav "><a href="bianji2.html">编辑</a><span>|</span></div>
+                    <div class="con2_nr_tj_nav "><a href="{:U('Home/Goods/goodsUpdateDis',array('goods_id'=>$vo['id']))}">编辑</a><span>|</span></div>
                     <div class="con2_nr_tj_nav" style="text-indent:17px;">复制链接<span>|</span></div>
                     <div class="con2_nr_tj_nav "><a href="#" class="delete" target="{$vo.id}">删除</a></div>
                 </div>
@@ -84,6 +84,7 @@
         var target = this_a.attr('target');
         $.post("{:U('Home/Goods/goodsDel')}",{id:target},function(data){
             if (data.status) {
+                alert(data.info);
                 location.reload();
             }else{
                 alert(data.info);

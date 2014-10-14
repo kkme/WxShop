@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" name="viewport" />
+<title>我的微店</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/tool.js"></script>
+<link href="__PUBLIC__/css/weidian.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+    /*编辑商品*/
+.bj2_k{2idth:100%;height:100%; background-color:#f1f1f1; margin:0 auto;}
+.bj2_1{width:100%;height:120px; margin:0 auto; background-color:#FFF}
+.bj2_1 img{ margin-top:10px; margin-left:5%}
+.spms{width:90%; height:60px; background-color:#FFF; margin-left:5%; margin-top:20px; border-bottom:#d9d9d9 1px solid;}
+.spms a,.spjg a,.spkc a{width:20%;height:60px; line-height:60px; border-right:#d9d9d9 1px solid; text-align:center; display:block; float:left}
+.spms input,.spjg input,.spkc input{width:78%;height:58px; border:none; float:right; font-size:16px; font-family:"方正黑体简体"; color:#6c6a6a}
+.spjg{width:90%; height:60px; background-color:#FFF; margin-left:5%; border-bottom:#d9d9d9 1px solid;}
+.spkc{width:90%; height:60px; background-color:#FFF; margin-left:5%;}
+.bj2_fl{width:90%;height:40px; border:none; background-color:#FFF; margin-left:5%; margin-top:10px; border:#bfbfbf 1px solid; font-family:"方正黑体简体"; font-size:16px; color:#525252}
+.bj2_sc{width:90%;height:50px; margin-top:20px; margin-left:5%; background-color:#FFF; border:none; color:#b60202; font-family:"方正黑体简体"; font-size:16px; line-height:50px; text-align:center;}
+    
+</style>
+</head>
+<body>
+<div class="box">
+	<div class="top">
+    	<div class="top1"><a href="{:U('Home/Store/shopDis')}"><img src="__PUBLIC__/images/tjt_03.png"></a></div>
+        <div class="top2">商品添加</div>
+        <div class="top3"><a  href="#">完成</a></div>
+    </div>
+    <div class="bj2_k">
+    	<div class="bj2_1">
+     	<img src="__PUBLIC__/images/kuang_16.png" id="addImg">
+        <span><img src="/WxShop/Uploads/goodsImg/{$goods.headerImg}" id="headerImg" style="width=100px;height:100px;"></span>
+    </div>
+    <form action="__URL__/imgUpload" method="post" enctype="multipart/form-data" target="hidden_frame" id="pic">
+            <input type="file" name="pic" style="visibility:hidden"/>
+            <input type="submit" value="submit" style="visibility:hidden"/>
+    </form>
+    <iframe name='hidden_frame' id="hidden_frame" style='display:none'></iframe>
+    <div class="tht">
+    	<form action="" method="get">
+            <input type="hidden" name="id" value="{$goods.id}">
+        	<div class="spms"><a>商品名</a><input type="text" name="name" value="{$goods.name}"></div>
+            <div class="spjg"><a>商品描述</a><input type="text" name="description" value="{$goods.description}"></div>
+            <div class="spjg"><a>商品价格</a><input type="text" name="retailPrice" value="{$goods.retailPrice}"></div>
+            <div class="spkc"><a>商品库存</a><input type="text" name="remainingQuantity" value="{$goods.remainingQuantity}"></div>
+        </form> 
+    </div> 
+    <form action="" method="get">
+    <select name="type_id" class="bj2_fl">
+        <volist name="cat" id="vo">
+           
+           <if condition="$vo.id eq $goods['type_id']">
+                <option value="{$vo.id}" selected="selected">{$vo.name}</option>
+                <else/>
+                <option value="{$vo.id}">{$vo.name}</option>
+           </if>         
+        </volist>
+    </select>
+    </form>	
+    
+</div>
+</body>
+<script type="text/javascript">
+  
+
+    $('#addImg').click(function(){
+            $('input[name="pic"]').click();
+    });        
+    // 提交图片之后，自动提交
+    $('input[name="pic"]').change(function(){
+        //模拟点击提交按钮
+        $('input[type="submit"]').click();
+        //显示进度条
+        $('#processShow').removeAttr('style');
+        //模拟进度条，给图片上传争取时间
+        var i = 0;
+        time = setInterval(function(){
+            i++;
+            $('#processShow').text(i+'%');
+            if (i == 100) {
+                clearInterval(time);
+                //向服务器端获取这个图片在服务器上的位置
+                $.post('__URL__/imgResponse',function(data){
+                    if (data == '') {
+                        alert('未知错误,错误代码:005');
+                    }else{
+                       $('#headerImg').attr('src',"/WxShop/Uploads/goodsImg/"+data);
+                    };
+                });
+            };
+        },50);
+
+    });
+
+    //点击完成，提交所有数据
+    $('.top3 a').click(function(event){
+        event.preventDefault();
+        var id = $("input[name='id']").val();
+        var name = $("input[name='name']").val();
+        var description = $("input[name='description']").val();
+        var retailPrice = $("input[name='retailPrice']").val();
+        var remainingQuantity = $("input[name='remainingQuantity']").val();
+        var type_id = $("select[name='type_id']").val();
+
+        if (name == '' || description == '' || retailPrice == '' || remainingQuantity == '') {
+            alert('请填写必要的信息');
+            return 0;
+        };
+
+        $.post('__URL__/goodsUpdatePro',{id:id,name:name,description:description,retailPrice:retailPrice,remainingQuantity:remainingQuantity,type_id:type_id},function(data){
+            if (data.status) {
+                alert(data.info);
+                location.href = "{:U('Home/Store/shopDis')}";
+            }else{
+                alert(data.info);
+            };
+            
+        });
+    });
+</script>
+</html>

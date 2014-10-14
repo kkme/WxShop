@@ -1,0 +1,24 @@
+request body = <TemplateSMS>
+                    <to>18943125835</to> 
+                    <appId>aaf98f89488d0aad0148b5146fde1252</appId>
+                    <templateId>1</templateId>
+                    <datas><data>3059</data><data>3</data></datas>
+                  </TemplateSMS>
+request url = https://sandboxapp.cloopen.com:8883/2013-12-26/Accounts/8a48b551488d07a80148b513ff121279/SMS/TemplateSMS?sig=7966B92AC2822FE095CC79FF7538B4D8
+response body = <?xml version="1.0" encoding="UTF-8" standalone="yes"?><Response><statusCode>000000</statusCode><TemplateSMS><dateCreated>20141014091444</dateCreated><smsMessageSid>20141014091444038022</smsMessageSid></TemplateSMS></Response>
+request body = <TemplateSMS>
+                    <to>18943125835</to> 
+                    <appId>aaf98f89488d0aad0148b5146fde1252</appId>
+                    <templateId>1</templateId>
+                    <datas><data>2259</data><data>3</data></datas>
+                  </TemplateSMS>
+request url = https://sandboxapp.cloopen.com:8883/2013-12-26/Accounts/8a48b551488d07a80148b513ff121279/SMS/TemplateSMS?sig=22B47F12DA1483AB3C15AB3F863EFEFF
+response body = <?xml version="1.0" encoding="UTF-8" standalone="yes"?><Response><statusCode>000000</statusCode><TemplateSMS><dateCreated>20141014091445</dateCreated><smsMessageSid>20141014091445038025</smsMessageSid></TemplateSMS></Response>
+request body = <TemplateSMS>
+                    <to>18943125835</to> 
+                    <appId>aaf98f89488d0aad0148b5146fde1252</appId>
+                    <templateId>1</templateId>
+                    <datas><data>2742</data><data>3</data></datas>
+                  </TemplateSMS>
+request url = https://sandboxapp.cloopen.com:8883/2013-12-26/Accounts/8a48b551488d07a80148b513ff121279/SMS/TemplateSMS?sig=E14E04EFB0B39498DBB061311ABCE5D9
+response body = <?xml version="1.0" encoding="UTF-8" standalone="yes"?><Response><statusCode>000000</statusCode><TemplateSMS><dateCreated>20141014091720</dateCreated><smsMessageSid>20141014091720038145</smsMessageSid></TemplateSMS></Response>

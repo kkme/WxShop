@@ -2,6 +2,7 @@
 	
 	namespace Home\Controller;
 	use Think\Controller;
+	use Org\Util\MessageSend;
 	class RegistController extends Controller{
 		/**
 		 * 注册第一步，向目标手机发送短信验证码
@@ -9,8 +10,7 @@
 		 */
 		public function sendCode(){
 			$phone = I('post.phone');
-			// $rand_num = rand(1000,9999);
-			   $rand_num = 111;
+			$rand_num = rand(1000,9999);
 			// 判断是否已经注册
 			if(M('Store')->where(array('shoper_phone'=>$phone))->find()){
 				$ret['status'] = false;
@@ -231,10 +231,45 @@
 		 * @return boolen
 		 */
 		public function sendMessage($phone,$content){
-			//TO-DO
-			return true;
-		}
+			//主帐号,对应开官网发者主账号下的 ACCOUNT SID
+			$accountSid= '8a48b551488d07a80148b513ff121279';
 
+			//主帐号令牌,对应官网开发者主账号下的 AUTH TOKEN
+			$accountToken= '465e20da24234158a3ec42191922522b';
+
+			//应用Id，在官网应用列表中点击应用，对应应用详情中的APP ID
+			//在开发调试的时候，可以使用官网自动为您分配的测试Demo的APP ID
+			$appId='aaf98f89488d0aad0148b5146fde1252';
+
+			//请求地址
+			//沙盒环境（用于应用开发调试）：sandboxapp.cloopen.com
+			//生产环境（用户应用上线使用）：app.cloopen.com
+			$serverIP='sandboxapp.cloopen.com';
+
+
+			//请求端口，生产环境和沙盒环境一致
+			$serverPort='8883';
+
+			//REST版本号，在官网文档REST介绍中获得。
+			$softVersion='2013-12-26';
+
+			 $rest = new MessageSend($serverIP,$serverPort,$softVersion);
+		     $rest->setAccount($accountSid,$accountToken);
+		     $rest->setAppId($appId);
+		    
+		     // 发送模板短信
+		     $result = $rest->sendTemplateSMS($phone,array($content,'3'),'1');
+		     if($result == NULL ) {
+		        return false;
+		         break;
+		     }
+		     if($result->statusCode!=0) {
+		         return false;
+		     }else{
+		        return true;
+		     }
+			
+		}	
 		/**
 		 * 测试函数
 		 */
@@ -246,4 +281,3 @@
 		}
 	}
 
- ?>

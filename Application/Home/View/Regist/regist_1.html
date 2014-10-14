@@ -29,6 +29,7 @@
                     alert('请输入正确的手机号码');
                 }else{
                     $.post("__URL__/sendCode",{phone:phone},function(data){
+                        console.log(data);
                         if (data.status) {
                             location.href="__URL__/regist_2.html?phone="+phone;
                         }else{

@@ -32,47 +32,45 @@
 </head>
 <body>
 <div class="box">
-    <div class="top">
-        <div class="top1"><a href="javascript:history.go(-1);"><img src="__PUBLIC__/images/tjt_03.png"></a></div>
+	<div class="top">
+    	<div class="top1"><a href="index1.html"><img src="__PUBLIC__/images/tjt_03.png"></a></div>
         <div class="top2">我的微店</div>
         <div class="top3"><a  href="tjsp.html">添加</a></div>
     </div>
-    <div class="sousuo">
-        <form action="" method="get">
-            <input name="" type="text" value="搜索" class="sousuo1">
+	<div class="sousuo">
+    	<form action="" method="get">
+        	<input name="" type="text" value="搜索" class="sousuo1">
         </form>
     </div>
     <div class="con">
-        <div class="con_tb"><a href="__URL__/shopViewDis?store_id={$store['id']}"><img src="/WxShop/Uploads/avatar/{$store['avatar']}"></a></div>
+    	<div class="con_tb"><a href="yldp1.html"><img src="__PUBLIC__/images/renxiang_03.png"></a></div>
         <div class="con_wz">
-         <h1>{$store['title']}<br>{$store['intro']}</h1>
+       	  <h1>我的微店<br>http://www.baidu.com</h1>
           
         </div>
     </div>
     <div class="con1">
-        <div class="con1_nav"><span>|</span><a href="bianji1.html">编辑</a></div>
+    	<div class="con1_nav"><span>|</span><a href="bianji1.html">编辑</a></div>
         <div class="con1_nav"><span>|</span><a href="#">复制链接</a></div>
         <div class="con1_nav"><a href="#">分享</a></div>
     </div>
     <div class="con2">
-        <volist name="goods" id="vo">
-            <div class="con2_nr">
-                <div class="con2_nr_tb"><a href="spxq.html"><img src="/WxShop/Uploads/goodsImg/{$vo.headerImg}" width="70px" height='70px'></a></div>
-                <div class="con2_nr_wz">
-                  <p>{$vo.name}<br><b>${$vo.retailPrice}</b></p>
-                  <div class="con2_g">
-                    <p>销售{$vo.sellQuantity}件</p>
-                    <p>库存{$vo.remainingQuantity}件</p>
-                    <p>{$vo.time|date="m-d",###}</p>
-                  </div>
-                </div>
-                <div class="con2_nr_tj">
-                    <div class="con2_nr_tj_nav "><a href="bianji2.html">编辑</a><span>|</span></div>
-                    <div class="con2_nr_tj_nav" style="text-indent:17px;">复制链接<span>|</span></div>
-                    <div class="con2_nr_tj_nav "><a href="#" class="delete">删除</a></div>
-                </div>
+    	<div class="con2_nr">
+        	<div class="con2_nr_tb"><a href="spxq.html"><img src="__PUBLIC__/images/tb_sp.jpg"></a></div>
+            <div class="con2_nr_wz">
+           	  <p>测试标题<br><b>￥55.00</b></p>
+              <div class="con2_g">
+              	<p>销售0件</p>
+                <p>库存45件</p>
+                <p>09-29</p>
+              </div>
             </div>
-        </volist>
+             <div class="con2_nr_tj">
+        	<div class="con2_nr_tj_nav "><a href="bianji2.html">编辑</a><span>|</span></div>
+            <div class="con2_nr_tj_nav" style="text-indent:17px;">复制链接<span>|</span></div>
+            <div class="con2_nr_tj_nav ">删除</div>
+        </div>
+        </div>
        
     </div>
     

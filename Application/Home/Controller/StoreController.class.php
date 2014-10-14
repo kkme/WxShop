@@ -31,6 +31,9 @@
 		 */
 		public function goodsDis($goods_id){
 			$this->goods = M('Goods')->where(array('id'=>$goods_id))->find();
+			// 获取商家信息
+			$store_id = $this->goods['store_id'];
+			$this->store = M('Store')->where(array('id'=>$store_id))->find();
 			$this->display('goods');
 		}
 	}

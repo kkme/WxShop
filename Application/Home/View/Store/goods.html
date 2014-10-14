@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <link href="__PUBLIC__/css/zy.css" rel="stylesheet" type="text/css" />
 <meta id="viewport" name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,minimal-ui">
-<script src="js/jquery.js"></script>
+<script src="__PUBLIC__/js/jquery.js"></script>
 <title>微店</title>
 </head>
 <body>
@@ -29,7 +29,16 @@
         <div class="yl_3">
            <p class="yl_p3">数量：</p>
            <div class="yl_sl">
-             <div class="yl_p4">1</div>
+             <div class="yl_p4">
+
+                <a class="num_min" href="#">-</a>
+
+                <input name="J_Amount" id="J_Amount" type="text" style="width:20px" value="1"/>  
+                <a class="num_plus" href="#">+</a> 
+
+                <input id="nAmount" type="hidden" value="{$goods.remainingQuantity}"/>  
+
+             </div>
              <div class="yl_p5">剩余{$goods.remainingQuantity}件</div>
            </div>
            <div class="yl_c">
@@ -40,10 +49,10 @@
         </div>
         <div  class="yl_4"><p>邀请卖家开通担保交易，购物更放心！</p></div>
         <div class="yl_5">
-        	<a href="yldp.html"><img src="__PUBLIC__/images/yl-2_03.png"></a>
-            <p class="yl_p6"><a href="yldp.html">开心就好</a></p>
+        	<a href="__URL__/shopViewDis?store_id={$store.id}"><img src="__PUBLIC__/images/yl-2_03.png"></a>
+            <p class="yl_p6"><a href="__URL__/shopViewDis?store_id={$store.id}">{$store.title}</a></p>
             <div class="yl_ht"></div>
-            <p class="yl_p7"><a href="yldp.html">进入店铺</a></p>
+            <p class="yl_p7"><a href="__URL__/shopViewDis?store_id={$store.id}">进入店铺</a></p>
         </div>
         <div class="yl_sp">商品详情</div>
         <div style="margin-left:5%">
@@ -73,4 +82,10 @@
     </div>
 </div>
 </body>
+
+<script type="text/javascript">
+  var plus = $('.num_plus');
+  //to-do
+</script>
+
 </html>

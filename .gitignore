@@ -1,2 +1,4 @@
 #排除掉Runtime
 Application/Runtime/
+#排除config文件
+Application/Common/Conf/config.php

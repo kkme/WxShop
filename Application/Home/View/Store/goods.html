@@ -31,27 +31,18 @@
            <div class="yl_sl">
              <div class="yl_p4">
 
-<<<<<<< HEAD
-                <a class="num_min" href="#">-</a>
-
-                <input name="J_Amount" id="J_Amount" type="text" style="width:20px" value="1"/>  
-                <a class="num_plus" href="#">+</a> 
-
-                <input id="nAmount" type="hidden" value="{$goods.remainingQuantity}"/>  
-
-             </div>
-=======
               
               <a class="num_oper num_min" href="javascript:jQuery.reduce('#J_Amount');">-</a>  
               <input name="J_Amount" id="J_Amount" class="input_txt" type="text" maxlength="6" style="width:20px" value="1" onkeyup="jQuery.modify('#J_Amount');"/>  
               <a class="num_oper num_plus" href="javascript:jQuery.add('#J_Amount')">+</a>  
-              <p class="caution_tips" id="J_Tip" style="display:none;"></p>  
+                
               <input id="nAmount" type="hidden" value="1000"/>  
 
 
               </div> 
->>>>>>> cf82143bfe98da50a64c8b62c2b4ff33d26a001c
+
              <div class="yl_p5">剩余{$goods.remainingQuantity}件</div>
+             <p class="caution_tips" id="J_Tip" style="display:none;"></p>
            </div>
            <div class="yl_c">
            		<div class="yl_gw"><a href="gwc_yl.html">我的购物车</a></div>
@@ -94,14 +85,14 @@
     </div>
 </div>
 </body>
-<<<<<<< HEAD
+
 
 <script type="text/javascript">
   var plus = $('.num_plus');
   //to-do
 </script>
 
-=======
+
 <script>
   jQuery.extend( {
   min : 1,
@@ -119,7 +110,9 @@
         x--;
       }
     } else {
-      jQuery('#J_Tip').html("<i class=\"ico\"></i>请输入正确的数量！");
+
+      jQuery('#J_Tip').html("*请输入正确的数量！");
+      jQuery('#J_Tip').css("color","red");
       jQuery('#J_Tip').show();
       jQuery(obj).val(1);
       jQuery(obj).focus();
@@ -131,8 +124,10 @@
     if (parseInt(x) >= this.min) {
       jQuery(obj).val(x);
     } else {
-      jQuery('#J_Tip').html("<i class=\"ico\"></i>商品数量最少为" + this.min
+
+      jQuery('#J_Tip').html("*商品数量最少为" + this.min
           + "！");
+      jQuery('#J_Tip').css("color","red");
       jQuery('#J_Tip').show();
       jQuery(obj).val(1);
       jQuery(obj).focus();
@@ -144,7 +139,8 @@
     if (parseInt(x) <= parseInt(max)) {
       jQuery(obj).val(x);
     } else {
-      jQuery('#J_Tip').html("<i class=\"ico\"></i>您所填写的商品数量超过库存！");
+      jQuery('#J_Tip').html("*商品数量超过库存！");
+      jQuery('#J_Tip').css("color","red");
       jQuery('#J_Tip').show();
       jQuery(obj).val(max == 0 ? 1 : max);
       jQuery(obj).focus();
@@ -156,20 +152,23 @@
     if (!this.reg(parseInt(x))) {
       jQuery(obj).val(1);
       jQuery(obj).focus();
-      jQuery('#J_Tip').html("<i class=\"ico\"></i>请输入正确的数量！");
+      jQuery('#J_Tip').html("*请输入正确的数量！");
+      jQuery('#J_Tip').css("color","red");
       jQuery('#J_Tip').show();
       return;
     }
     var intx = parseInt(x);
     var intmax = parseInt(max);
     if (intx < this.min) {
-      jQuery('#J_Tip').html("<i class=\"ico\"></i>商品数量最少为" + this.min
+      jQuery('#J_Tip').html("*商品数量最少为" + this.min
           + "！");
+      jQuery('#J_Tip').css("color","red");
       jQuery('#J_Tip').show();
       jQuery(obj).val(this.min);
       jQuery(obj).focus();
     } else if (intx > intmax) {
-      jQuery('#J_Tip').html("<i class=\"ico\"></i>您所填写的商品数量超过库存！");
+      jQuery('#J_Tip').html("*商品数量超过库存！");
+      jQuery('#J_Tip').css("color","red");
       jQuery('#J_Tip').show();
       jQuery(obj).val(max == 0 ? 1 : max);
       jQuery(obj).focus();
@@ -177,5 +176,4 @@
   }
 });
 </script>
->>>>>>> cf82143bfe98da50a64c8b62c2b4ff33d26a001c
 </html>

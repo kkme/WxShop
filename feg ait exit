@@ -1,0 +1,92 @@
+[33mcommit cf82143bfe98da50a64c8b62c2b4ff33d26a001c[m
+Merge: b2dae5c 8a43578
+Author: demonchang <changdemon@outlook.com>
+Date:   Tue Oct 14 09:42:59 2014 +0800
+
+    Merge branch 'master' of github.com:blue7wings/WxShop
+    
+    Conflicts:
+    	Application/Runtime/Cache/Home/052e6c7c8df434f64c4aca871276adb5.php
+    	Application/Runtime/Cache/Home/2bf00110767fb0f689398ecc8ce6bb6b.php
+    	Application/Runtime/Cache/Home/44a3104e813c3bc748f434839cde29dc.php
+    	Application/Runtime/Cache/Home/5ee0213fe5f487b0539d4cbf09ff781b.php
+    	Application/Runtime/Cache/Home/60043f53dfc506aa3f19813c7a9e048b.php
+    	Application/Runtime/Cache/Home/a8a4cd9bba0df902c79dc027f7f5b7ee.php
+    	Application/Runtime/Cache/Home/b09d77e81f826eebdc5c543769690d26.php
+    	Application/Runtime/Cache/Home/f21f3f72109910dd732f91998679af6d.php
+
+[33mcommit b2dae5c26609aeb1c3fa9aace2faaf6ee7403670[m
+Author: demonchang <changdemon@outlook.com>
+Date:   Tue Oct 14 09:22:52 2014 +0800
+
+    fdgh
+
+[33mcommit 8a4357804e30c23d90f3ef5fb23f42940a392a13[m
+Author: root <muyangdog@yeah.net>
+Date:   Mon Oct 13 15:53:21 2014 +0800
+
+    添加.gitignore
+
+[33mcommit 223f43152557000476907bc23e9a1ba5ca9f3799[m
+Author: root <muyangdog@yeah.net>
+Date:   Mon Oct 13 15:42:23 2014 +0800
+
+    更新数据库
+
+[33mcommit afaeb06dd7b6f7c5b2f0161626e8e636b1dfa541[m
+Author: root <muyangdog@yeah.net>
+Date:   Mon Oct 13 15:38:11 2014 +0800
+
+    commit
+
+[33mcommit fd3f50b023d1975439477776cc1c9f7fde73ce2e[m
+Merge: c75e878 b695734
+Author: root <muyangdog@yeah.net>
+Date:   Mon Oct 13 15:35:38 2014 +0800
+
+    Merge branch 'master' of github.com:blue7wings/WxShop
+    
+    Conflicts:
+    	README.md
+
+[33mcommit c75e8789c91c02fe9b6a3a8033c4f446ed011e87[m
+Author: root <muyangdog@yeah.net>
+Date:   Mon Oct 13 15:34:30 2014 +0800
+
+    commit1
+
+[33mcommit b695734dbc11162311a7715e7adce4001fce21ea[m
+Author: demonchang <changdemon@outlook.com>
+Date:   Mon Oct 13 15:30:04 2014 +0800
+
+    commit
+
+[33mcommit 918a10687aa74027903485bb8fed60fb93468b32[m
+Author: root <muyangdog@yeah.net>
+Date:   Mon Oct 13 15:09:28 2014 +0800
+
+    last commit
+
+[33mcommit 0dbe29f19f67717df286a4e2520f6258e6c9baea[m
+Author: root <muyangdog@yeah.net>
+Date:   Thu Oct 9 16:58:45 2014 +0800
+
+    用户注册逻辑和界面部分完成
+
+[33mcommit 379b53b6030749127e5bfaad3abd6b433be83ddf[m
+Author: root <muyangdog@yeah.net>
+Date:   Thu Oct 9 10:41:03 2014 +0800
+
+    添加数据库
+
+[33mcommit 53c22e67c7dd3af232fcc8e6d5c4abee50099e83[m
+Author: root <muyangdog@yeah.net>
+Date:   Wed Oct 8 15:21:34 2014 +0800
+
+    添加模板文件
+
+[33mcommit 906fdf2d28e4fab895cfc82ad5f6189d8041ef29[m
+Author: Bruce Xia <muyangdog@yeah.net>
+Date:   Wed Oct 8 15:12:26 2014 +0800
+
+    Initial commit

@@ -5,7 +5,7 @@ return array(
 	'DB_HOST'=>'localhost',
 	'DB_NAME'=>'wxshop',
 	'DB_USER'=>'root',
-	'DB_PWD'=>'b90623',
+	'DB_PWD'=>'',
 
 	'DB_PREFIX'=>'',
 );

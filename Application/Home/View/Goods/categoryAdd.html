@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" name="viewport" />
+<title>我的微店</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/tool.js"></script>
+<link href="__PUBLIC__/css/weidian.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+    /*添加分类*/
+.tj_1{width:80%;height:50px; margin:0 auto; margin-top:5%;}
+.tj_sc{width:20px;height:20px; background-color:#d00000; float:left; border-radius:50px; text-align:center;  margin-top:15px}
+.tj_1 input{ float:left;width:85%;height:50px; background-color:#FFF; border:none; margin-left:5%; font-family:"方正黑体简体"; font-size:16px; color:#292929}
+.tj_sc a{color:#FFF;}
+
+</style>
+</head>
+<body>
+<div class="box">
+	<div class="top">
+    	<div class="top1"><a href="{:U('Home/Goods/goodsAddDis')}"><img src="__PUBLIC__/images/tjt_03.png"></a></div>
+        <div class="top2">添加分类</div>
+        <div class="top3"><a  href="#">完成</a></div>
+    </div>
+	<div class="bj1_k">
+        <volist name="cat" id="vo">
+            <div class="tj_1">
+            <div class="tj_sc"><a href="#" target="{$vo.id}" name="delete">x</a></div>
+                <form action="" method="get">
+                    <input type="text" value="{$vo.name}">
+                </form>
+            </div>    
+        </volist>
+       
+        <div class="tj_1">
+        <div class="tj_sc"><a href="#" name="add">+</a></div>
+            <form action="" method="get">
+            	<input type="text" value="请添加分类" onfocus="if(this.value='请添加分类') this.value = ''" onblur="if(this.value == '') this.value = '请添加分类'" style="color:#ccc" name="add">
+            </form>
+        </div>
+        
+        <script type="text/javascript">
+            $('a[name="add"]').click(function(event){
+                event.preventDefault();
+                var cat = $('input[name="add"]').val();
+                $.post('__URL__/categoryAddPro',{cat:cat},function(data){
+                    if (data.status) {
+                        location.reload();
+                    }else{
+                        alert(data.info);
+                    };
+                });
+            });
+            $('a[name="delete"]').click(function(event){
+                event.preventDefault();
+            });
+        </script>
+        
+        
+    
+    </div>
+    
+    
+    
+</div>
+</body>
+</html>

@@ -7,6 +7,11 @@
 		 */
 		public function shopDis(){
 			$store = session('store');
+			//如果没有登陆，跳转到登陆页面
+			$store = session('store');
+			if (empty($store['id'])) {
+				$this->error('请登陆后再进行操作',U('Home/Regist/login'));
+			}
 			//获取店家的基本信息
 			$this->store = M('Store')->where(array('id'=>$store['id']))->find();
 			//获取该商家的所有商品
@@ -36,6 +41,7 @@
 			$this->store = M('Store')->where(array('id'=>$store_id))->find();
 			$this->display('goods');
 		}
+
 	}
 
  ?>

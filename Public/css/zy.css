@@ -577,3 +577,13 @@ li{ line-height:25px}
 .ddxq_2{ color:#333; line-height:60px; margin-left:5%;}
 .shangc{ margin-left:42%; font-size:16px; color:#5c5c5c;}
 .shangc span{ color:#03ae17; margin-left:5px; font-size:18px}
+/* 小圆圈 */
+.circle{
+    background: none repeat scroll 0 0 #FF3300;
+    border-radius: 78.5px 78.5px 78.5px 78.5px;
+    color: #FFFFFF;
+    padding:1px 5px;
+    position: relative;
+    margin-right: 10px;
+    clear:both;
+}

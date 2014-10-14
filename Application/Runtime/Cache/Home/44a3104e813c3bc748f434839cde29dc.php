@@ -39,6 +39,7 @@
                     alert('请输入正确的手机号码');
                 }else{
                     $.post("/WxShop/index.php/Home/Regist/sendCode",{phone:phone},function(data){
+                        console.log(data);
                         if (data.status) {
                             location.href="/WxShop/index.php/Home/Regist/regist_2.html?phone="+phone;
                         }else{

@@ -70,7 +70,7 @@
         <div id="light" class="white_content">该店家暂未设置分类 <a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">关闭</a></div> 
         <div id="fade" class="black_overlay"></div> </li>
       			<li class="line"><a href="wdwd1.html">我的微店</a></li>
-      			<li class="line"><a href="gwc.html">购物车<span class="circle">1</span></a></li>
+      			<li class="line"><a href="gwc.html" class="shopping_cart">购物车<span class="circle">1</span></a></li>
   			</ul>
             <div class="tb_content">
             	<div class="search_left">
@@ -84,7 +84,17 @@
     </div>
 </div>
 </body>
-
+<script>
+  $(function(){
+    var $span_val = $('.shopping_cart>span');
+    var _count = $span_val.html();
+    if(_count==''){
+      $span_val.hide();
+    }else{
+      $span_val.show();
+    }
+  });
+</script>
 <script>
   jQuery.extend( {
   min : 1,

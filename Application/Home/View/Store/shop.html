@@ -7,6 +7,8 @@
 <meta name="description" content="">
 <meta name="keywords" content="">
 <link href="__PUBLIC__/css/weidian.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/tool.js"></script>
 <style type="text/css">
     .con1{width:100%; height:50px; border-bottom:1px solid #ccc; background-color:#FFF}
     .con1_nav{ float:left; width:33%; height:50px;  line-height:50px;}
@@ -35,7 +37,7 @@
     <div class="top">
         <div class="top1"><a href="javascript:history.go(-1);"><img src="__PUBLIC__/images/tjt_03.png"></a></div>
         <div class="top2">我的微店</div>
-        <div class="top3"><a  href="tjsp.html">添加</a></div>
+        <div class="top3"><a  href="{:U('Home/Goods/goodsAddDis')}">添加</a></div>
     </div>
     <div class="sousuo">
         <form action="" method="get">
@@ -69,12 +71,25 @@
                 <div class="con2_nr_tj">
                     <div class="con2_nr_tj_nav "><a href="bianji2.html">编辑</a><span>|</span></div>
                     <div class="con2_nr_tj_nav" style="text-indent:17px;">复制链接<span>|</span></div>
-                    <div class="con2_nr_tj_nav "><a href="#" class="delete">删除</a></div>
+                    <div class="con2_nr_tj_nav "><a href="#" class="delete" target="{$vo.id}">删除</a></div>
                 </div>
             </div>
         </volist>
     </div>
 </div>
+<script type="text/javascript">
+    $('.delete').click(function(event){
+        event.preventDefault();
+        var this_a = $(this);
+        var target = this_a.attr('target');
+        $.post("{:U('Home/Goods/goodsDel')}",{id:target},function(data){
+            if (data.status) {
+                location.reload();
+            }else{
+                alert(data.info);
+            };
+        });
+    });
+</script>
 </body>
-
 </html>

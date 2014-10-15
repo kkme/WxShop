@@ -32,7 +32,7 @@
             event.preventDefault();
             $.post('__URL__/loginPro',{shoper_phone:shoper_phone,password:password},function(data){
                 if (data.status) {
-                    location.href = "{:U('Home/Store/shopDis')}";
+                    location.href = "{:U('Home/Store/dashboardDis')}";
                 }else{
                     alert(data.info);
                 };

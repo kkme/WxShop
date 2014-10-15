@@ -3,6 +3,19 @@
 	use Think\Controller;
 	class StoreController extends Controller{
 		/**
+		 * [商家部分]商家面板
+		 */
+		public function dashboardDis(){
+			$store = session('store');
+			//如果没有登陆，跳转到登陆页面
+			$store = session('store');
+			if (empty($store['id'])) {
+				$this->error('请登陆后再进行操作',U('Home/Regist/login'));
+			}
+			$this->display('dashboard');
+		}
+
+		/**
 		 * [商家部分]商家产品分类展示
 		 */
 		public function shopDis(){

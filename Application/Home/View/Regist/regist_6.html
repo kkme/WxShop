@@ -68,7 +68,7 @@
             };
             $.post('__URL__/setStorePro',{title:title,intro:intro},function(data){
                 if (data.status) {
-                    location.href = "{:U('Home/Store/shopDis')}";
+                    location.href = "{:U('Home/Store/dashboardDis')}";
                 }else{
                     alert(data.info);
                 };

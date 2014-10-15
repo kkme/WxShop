@@ -142,14 +142,9 @@
 		    // 上传文件 
 		    $info   =   $upload->uploadOne($_FILES['pic']);
 		    $path = $info['savepath'].$info['savename'];
-		    //　将头像图片存入数据库
-		    $auth = session('auth');
-		    $data['id'] = $auth['store_id'];
-		    $data['avatar'] = $info['savename'];
-		    $data['time'] = time();
-		    M('Store')->save($data);
 		    //　剪裁图片
 		    $this->imgCut("./Uploads/avatar/".$info['savename']);
+		    session('avatar',$info['savename']);
 		}
 
 		//对图片进行缩略，并强制控制大小
@@ -161,15 +156,16 @@
 
 		// 对前端头像图片请求进行响应
 		public function imgResponse(){
-			$auth = session('auth');
-			$data['id'] = $auth['store_id'];
-			$store = M('Store')->where($data)->find();
-			$this->ajaxReturn($store['avatar']);
+			$this->ajaxReturn(session('avatar'));
 		}
 
 		//　处理商家信息
 		public function setStorePro(){
 			$auth = session('auth');
+			$avatar = session('avatar');
+			if ($avatar) {
+				$data['avatar'] = $avatar;
+			}
 			$data['id'] = $auth['store_id'];
 			$data['title'] = I('post.title');
 			$data['intro'] = I('post.intro');
@@ -179,16 +175,18 @@
 				$ret['info'] = '未知错误，错误代码：006，请联系客服解决';
 				goto end;
 			}
+			//删除session
+			session('avatar',NULL);
 			//初始化第一件商品
 			$goods['store_id'] = $auth['store_id'];
-			$goods['name'] = '自动添加的商品，请删除';
+			$goods['name'] = '自动添加的商品';
 			$goods['type_id'] = 0;
 			$goods['originalPrice'] = 9.9;
 			$goods['retailPrice'] = 9.9;
 			$goods['headerImg'] = 'example.jpg';
 			$goods['description'] = '这是系统自动添加的商品，请及时删除';
 			$goods['quantity'] = 7;
-			$goods['remainingQuantity'] = 1;
+			$goods['remainingQuantity'] = 9 ;
 			$goods['time'] = time();
 			$goods['status'] = 1;
 			$is_goods_add = M('Goods')->add($goods);

@@ -89,13 +89,14 @@
 		public function goodsUpdatePro(){
 			$store = session('store');
 			$headerImg = session('headerImg');
-			
+			if (!empty($headerImg)) {
+				$data['headerImg'] = $headerImg;
+			}
 			$data['id'] = I('post.id');
 			$data['name'] = I('post.name');
 			$data['description'] = I('post.description');
 			$data['retailPrice'] = I('post.retailPrice');
 			$data['remainingQuantity'] = I('post.remainingQuantity');
-			$data['headerImg'] = $headerImg;
 			$data['type_id'] = I('post.type_id');
 			$data['store_id'] = $store['id'];
 			$data['status'] = 1;
@@ -113,6 +114,8 @@
 			}
 			$ret['status'] = true;
 			$ret['info'] = '商品修改成功';
+			//清除图片session
+			session('headerImg',NULL);
 			end:
 			$this->ajaxReturn($ret);
 		}
@@ -133,9 +136,9 @@
 			$type = I('post.cat');
 			//获取商家
 			$store = session('store');
-			$data['name'] = $type;
+			$data['name']     = $type;
 			$data['store_id'] = $store['id'];
-			$data['time'] = time();
+			$data['time']     = time();
 			$is_add = M('Type')->add($data);
 			if (!$is_add) {
 				$ret['status'] = false;
@@ -189,9 +192,9 @@
 		    $data['time'] = time();
 		    M('Store')->save($data);
 		    //　剪裁图片
-		    $this->imgCut("./Uploads/goodsImg/".$info['savename']);
+		    // $this->imgCut("./Uploads/goodsImg/".$info['savename']);
 		    //将图片写入session，以便在前台调用
-		    sleep(2);
+		    // sleep(2);
 		    session('headerImg',$info['savename']);
 		}
 

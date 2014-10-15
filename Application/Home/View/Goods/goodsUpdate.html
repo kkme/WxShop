@@ -35,6 +35,7 @@
     	<div class="bj2_1">
      	<img src="__PUBLIC__/images/kuang_16.png" id="addImg">
         <span><img src="/WxShop/Uploads/goodsImg/{$goods.headerImg}" id="headerImg" style="width=100px;height:100px;"></span>
+        <span id="processShow" style="color:#ccc"></span>
     </div>
     <form action="__URL__/imgUpload" method="post" enctype="multipart/form-data" target="hidden_frame" id="pic">
             <input type="file" name="pic" style="visibility:hidden"/>
@@ -75,14 +76,13 @@
     $('input[name="pic"]').change(function(){
         //模拟点击提交按钮
         $('input[type="submit"]').click();
-        //显示进度条
-        $('#processShow').removeAttr('style');
         //模拟进度条，给图片上传争取时间
         var i = 0;
         time = setInterval(function(){
             i++;
             $('#processShow').text(i+'%');
             if (i == 100) {
+                 $('#processShow').text('');
                 clearInterval(time);
                 //向服务器端获取这个图片在服务器上的位置
                 $.post('__URL__/imgResponse',function(data){

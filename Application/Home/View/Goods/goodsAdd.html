@@ -88,7 +88,7 @@
                     if (data == '') {
                         alert('未知错误,错误代码:005');
                     }else{
-                       $('#processShow').removeAttr('style').html("<img src="+"/WxShop/Uploads/goodsImg/"+data+">");
+                       $('#processShow').removeAttr('style').html("<img src="+"/WxShop/Uploads/goodsImg/"+data+" style='width:100px;height:100px;'>");
                     };
                 });
             };
@@ -99,11 +99,11 @@
     //点击完成，提交所有数据
     $('.top3 a').click(function(event){
         event.preventDefault();
-        var name = $("input[name='name']").val();
-        var description = $("input[name='description']").val();
-        var retailPrice = $("input[name='retailPrice']").val();
+        var name              = $("input[name='name']").val();
+        var description       = $("input[name='description']").val();
+        var retailPrice       = $("input[name='retailPrice']").val();
         var remainingQuantity = $("input[name='remainingQuantity']").val();
-        var type_id = $("select[name='type_id']").val();
+        var type_id           = $("select[name='type_id']").val();
 
         if (name == '' || description == '' || retailPrice == '' || remainingQuantity == '') {
             alert('请填写必要的信息');

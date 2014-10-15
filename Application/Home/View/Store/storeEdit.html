@@ -6,6 +6,8 @@
 <title>我的微店</title>
 <meta name="description" content="">
 <meta name="keywords" content="">
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/tool.js"></script>
 <link href="__PUBLIC__/css/weidian.css" rel="stylesheet" type="text/css">
 <style type="text/css">
     /*编辑店铺*/
@@ -33,33 +35,83 @@
 <body>
 <div class="box">
 	<div class="top">
-    	<div class="top1"><a href="weidian.html"><img src="__PUBLIC__/images/tjt_03.png"></a></div>
+    	<div class="top1"><a href="javascript:history.go(-1);"><img src="__PUBLIC__/images/tjt_03.png"></a></div>
         <div class="top2">编辑店铺</div>
-        <div class="top3"><a  href="#">完成</a></div>
+        <div class="top3"><a  href="#" id="finish">完成</a></div>
     </div>
 	<div class="bj1_k">
     	<div class="bj_1">
-        	<img src="__PUBLIC__/images/renxiang_03.png">
+        	<img src="/WxShop/Uploads/avatar/{$store.avatar}" id="headerImg">
             <p>点击图片编辑店铺图标</p>
+            <form action="__URL__/imgUpload" method="post" enctype="multipart/form-data" target="hidden_frame" id="pic">
+                <input type="file" name="pic" style="visibility:hidden"/>
+                <input type="submit" value="submit" style="visibility:hidden"/>
+            </form>
+            <iframe name='hidden_frame' id="hidden_frame" style='display:none'></iframe>
         </div>
         <div class="bj1_2">
         	<div class="bj1_dp">店铺名称</div>
             <form action="" method="get">
-            	<input type="text" value="开心就好">
+            	<input type="text" value="{$store.title}" name="title">
             </form>
         </div>
         <div class="bj1_3">
         	<div class="bj1_dp">店铺公告</div>
             <form action="" method="get">
-            	<input type="text" value="">
+            	<input type="text" value="{$store.intro}" name="intro">
             </form>
            
         </div>
     
-    </div>
-    
-    
-    
+    </div> 
 </div>
 </body>
 </html>
+<script type="text/javascript">
+    $('#headerImg').click(function(){
+            $('input[name="pic"]').click();
+    });
+    $('input[name="pic"]').change(function(){
+        //模拟点击提交按钮
+        $('input[type="submit"]').click();
+        //模拟进度条，给图片上传争取时间
+        var i = 0;
+        time = setInterval(function(){
+            i++;
+            $('.bj_1 p').text(i+'%');
+            if (i == 100) {
+                $('.bj_1 p').text('图片上传完成，点击可重新上传');
+                clearInterval(time);
+                //向服务器端获取这个图片在服务器上的位置
+                $.post('__URL__/imgResponse',function(data){
+                    if (data == '') {
+                        alert('未知错误,错误代码:005');
+                    }else{
+                       $('#headerImg').attr('src',"/WxShop/Uploads/avatar/"+data);
+                    };
+                });
+            };
+        },50);
+
+    });  
+
+    //完成提交
+
+    $('#finish').click(function(event){
+        event.preventDefault();
+        var title = $('input[name="title"]').val();
+        var intro = $('input[name="intro"]').val();
+        if (title == '' || intro == '') {
+            alert('请输入正确的店铺名和店铺公告');
+            return 0;
+        };
+        $.post('__URL__/storeEditPro',{title:title,intro:intro},function(data){
+            if (data.status) {
+                alert('店铺编辑成功');
+                location.href = "__URL__/shopDis";
+            }else{
+                alert('店铺编辑失败');
+            };
+        });
+    });
+</script>

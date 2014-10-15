@@ -5,6 +5,12 @@
 <link href="__PUBLIC__/css/zy.css" rel="stylesheet" type="text/css" />
 <meta id="viewport" name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,minimal-ui">
 <script src="__PUBLIC__/js/jquery.js"></script>
+<style type="text/css">
+  .x_tx img{float:left;margin-top:-30px; border-radius:50px; margin-left:10%;padding: 0px;}
+  .x_text{ float:left; margin-left:5%;margin-top: 5% }
+  .x_cp{width:45%;height:250px; background-color:#FFF; float:left; margin:0 2%; margin-top:5%}
+  .x_jq{ color:#b94545;font-size:16px; line-height:150%; text-indent:24px; margin-top:10%;margin-left: -10px;}
+</style>
 <title>微店</title>
 </head>
 <body>
@@ -22,7 +28,7 @@
       <div class="x_banner"><img src="__PUBLIC__/images/x_banner.jpg"width="100%"></div>
       <div class="x_touxiang">
       	<div class="x_tx">
-        <img src="__PUBLIC__/images/x_touxiang_15.png">
+        <img src="/WxShop/Uploads/avatar/{$store.avatar}">
         <div class="x_text">
         <p class="x_dm">{$store['title']}</p>
         <p class="x_wx">{$store['intro']}</p>
@@ -38,7 +44,7 @@
                 <dl>
                   <dt><img src="/WxShop/Uploads/goodsImg/{$vo.headerImg}"width="100%"height="150px"></dt>
                     <dd>
-                        <p class="name">{$vo.name|sysSubStr=###,18}...</p>
+                        <p class="name">{$vo.name}</p>
                         <p class="x_jq">￥{$vo.retailPrice}</p>
                     </dd>
                 </dl>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+	<meta charset="utf-8">
+	<title>Admin</title>
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="robots" content="" />
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel="stylesheet" href="__PUBLIC__/css/style.css" media="all" />
+	<!--[if IE]><link rel="stylesheet" href="css/ie.css" media="all" /><![endif]-->
+	<!--[if lt IE 9]><link rel="stylesheet" href="css/lt-ie-9.css" media="all" /><![endif]-->
+</head>
+<body>
+<div class="testing">
+
+<section class="user">
+	<div class="profile-img">
+		<p><img src="__PUBLIC__/images/admin.png" alt="" height="40" width="40" /> 欢迎 XXX 进入后台管理界面</p>
+	</div>
+	<div class="buttons">
+		<button class="ico-font">&#9206;</button>
+		<span class="button">返回主页</span>
+		<span class="button blue"><a href="login.html">退出</a></span>
+	</div>
+</section>
+
+</div>
+<nav>
+	<ul>
+
+		<li class="section"><a href="admin.html"><span class="icon">&#128202;</span> 统计视图</a></li>
+		
+		<li><a href="user.html"><span class="icon">&#128101;</span> 用户管理<span class="pip">总人数</span></a></li
+
+	</ul>
+</nav>
+
+<section class="alert">
+	<div class="green">	
+		<p>注意： 视图统计只统计每月的交易数量!</p>
+		<span class="close">&#10006;</span>
+	</div>
+</section>
+<section class="content">
+	<section class="widget">
+		<header>
+			<span class="icon">&#128200;</span>
+			<hgroup>
+				<h1>视图统计表</h1>
+			</hgroup>
+			<aside>
+				<button class="left-btn">&#59229;</button><button class="right-btn">&#59230;</button>
+			</aside>
+		</header>
+		<div class="content cycle">
+			<div id="flot-example-2" class="graph-area"></div>
+			<div id="flot-example-1" class="graph-area"></div>
+		</div>
+		</div>
+	</section>
+	
+
+	
+	<div class="widget-container">
+		<section class="widget small">
+		<header> 
+				<span class="icon">&#128711;</span>
+				<hgroup>
+					<h1>总数统计</h1>
+				</hgroup>
+			</header>
+			<div class="content">
+				<section class="stats-wrapper">
+					<div class="stats">
+						<p><span>234</span></p>
+						<p>商铺数量</p>
+					</div>
+					<div class="stats">
+						<p><span>234</span></p>
+						<p>用户总数</p>
+					</div>
+				</section>
+				<section class="stats-wrapper">
+					<div class="stats">
+						<p><span>234</span></p>
+						<p>交易总量</p>
+					</div>
+					<div class="stats">
+						<p><span>234</span></p>
+						<p>交易总额</p>
+					</div>
+				</section>
+			</div>
+		</section>
+		
+		<section class="widget small">
+			<header> 
+				<span class="icon">&#128363;</span>
+				<hgroup>
+					<h1>新添商铺</h1>
+				</hgroup>
+			</header>
+			<div class="content no-padding timeline">
+				<div class="tl-post">
+					<span class="icon">&#59170;</span>
+					<p>吉大外卖</p>
+				</div>
+								<div class="tl-post">
+					<span class="icon">&#59170;</span>
+					<p>吉大外卖</p>
+				</div>
+								<div class="tl-post">
+					<span class="icon">&#59170;</span>
+					<p>吉大外卖</p>
+				</div>
+								<div class="tl-post">
+					<span class="icon">&#59170;</span>
+					<p>吉大外卖</p>
+				</div>
+				<div class="pie graph-area"></div>
+			</div>
+		</section>
+		
+	</div>
+	<div class="widget-container">
+	</div>
+</section>
+<script src="__PUBLIC__/js/jquery-1.6.1.min.js"></script>
+<script src="__PUBLIC__/js/jquery.wysiwyg.js"></script>
+<script src="__PUBLIC__/js/custom.js"></script>
+<script src="__PUBLIC__/js/cycle.js"></script>
+<script src="__PUBLIC__/js/jquery.checkbox.min.js"></script>
+<script src="__PUBLIC__/js/flot.js"></script>
+<script src="__PUBLIC__/js/flot.resize.js"></script>
+<script src="__PUBLIC__/js/flot-time.js"></script>
+<script src="__PUBLIC__/js/flot-pie.js"></script>
+<script src="__PUBLIC__/js/flot-graphs.js"></script>
+<script src="__PUBLIC__/js/cycle.js"></script>
+<script src="__PUBLIC__/js/jquery.tablesorter.min.js"></script>
+<script type="text/javascript">
+// Feature slider for graphs
+$('.cycle').cycle({
+	fx: "scrollHorz",
+	timeout: 0,
+    slideResize: 0,
+    prev:    '.left-btn', 
+    next:    '.right-btn'
+});
+</script>
+</body>
+</html>

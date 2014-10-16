@@ -8,6 +8,7 @@
 <meta name="keywords" content="">
 <script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/tool.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.min.js"></script>
 <link href="__PUBLIC__/css/weidian.css" rel="stylesheet" type="text/css">
 <style type="text/css">
     /*编辑商品*/
@@ -33,32 +34,29 @@
     </div>
     <div class="bj2_k">
     	<div class="bj2_1">
-     	<img src="__PUBLIC__/images/kuang_16.png" id="addImg">
-        <span id="processShow" style="display:none">0%</span>
+        <img src="__PUBLIC__/images/kuang_16.png" id="headerImg" style="width=100px;height:100px;">
+        <form action="/WxShop/goodsImgUpload.php" method="post" enctype="multipart/form-data" id="MyUploadForm">
+            <input name="image_file" id="imageInput" type="file" style="position:absolute;left:7%;top:70px;height:93px;width:93px;opacity:0;"/>
+        </form>
+        
     </div>
-    <form action="__URL__/imgUpload" method="post" enctype="multipart/form-data" target="hidden_frame" id="pic">
-            <input type="file" name="pic" style="visibility:hidden"/>
-            <input type="submit" value="submit" style="visibility:hidden"/>
-    </form>
-    <iframe name='hidden_frame' id="hidden_frame" style='display:none'></iframe>
     <div class="tht">
-    	<form action="" method="get">
-            
         	<div class="spms"><a>商品名</a><input type="text" name="name" value=""></div>
             <div class="spjg"><a>商品描述</a><input type="text" name="description" value=""></div>
             <div class="spjg"><a>商品价格</a><input type="text" name="retailPrice" value=""></div>
             <div class="spkc"><a>商品库存</a><input type="text" name="remainingQuantity" value=""></div>
-        </form> 
     </div> 
-    <form action="" method="get">
     <select name="type_id" class="bj2_fl">
     	<option value="-1">请选择分类</option>
         <volist name="cat" id="vo">
            <option value="{$vo.id}">{$vo.name}</option>         
         </volist>
     </select>
-    </form>	
-    <!-- <p class='tj'>添加分类</p> -->
+
+    <div style="display:none" id="output">
+        <input type="hidden" name="headerImg" value="">
+    </div>
+
     <a href="__URL__/categoryAddDis"><input class="bj2_sc" type="button" value="添加分类"></a>
     
 </div>
@@ -66,35 +64,7 @@
 <script type="text/javascript">
   
 
-    $('#addImg').click(function(){
-            $('input[name="pic"]').click();
-    });        
-    // 提交图片之后，自动提交
-    $('input[name="pic"]').change(function(){
-        //模拟点击提交按钮
-        $('input[type="submit"]').click();
-        //显示进度条
-        $('#processShow').removeAttr('style');
-        //模拟进度条，给图片上传争取时间
-        var i = 0;
-        time = setInterval(function(){
-            i++;
-            $('#processShow').text(i+'%');
-            if (i == 100) {
-                $('#processShow').css("visibility","hidden");
-                clearInterval(time);
-                //向服务器端获取这个图片在服务器上的位置
-                $.post('__URL__/imgResponse',function(data){
-                    if (data == '') {
-                        alert('未知错误,错误代码:005');
-                    }else{
-                       $('#processShow').removeAttr('style').html("<img src="+"/WxShop/Uploads/goodsImg/"+data+" style='width:100px;height:100px;'>");
-                    };
-                });
-            };
-        },50);
-
-    });
+    
 
     //点击完成，提交所有数据
     $('.top3 a').click(function(event){
@@ -104,13 +74,14 @@
         var retailPrice       = $("input[name='retailPrice']").val();
         var remainingQuantity = $("input[name='remainingQuantity']").val();
         var type_id           = $("select[name='type_id']").val();
+        var headerImg         = $("input[name='headerImg']").val();
 
         if (name == '' || description == '' || retailPrice == '' || remainingQuantity == '') {
             alert('请填写必要的信息');
             return 0;
         };
 
-        $.post('__URL__/goodsAddPro',{name:name,description:description,retailPrice:retailPrice,remainingQuantity:remainingQuantity,type_id:type_id},function(data){
+        $.post('__URL__/goodsAddPro',{name:name,description:description,retailPrice:retailPrice,remainingQuantity:remainingQuantity,type_id:type_id,headerImg:headerImg},function(data){
             if (data.status) {
                 location.href = "{:U('Home/Store/shopDis')}";
             }else{
@@ -118,5 +89,85 @@
             };
         });
     });
+
+    //商品大图添加
+     $(document).ready(function() { 
+            var options = { 
+                    target: '#output',   // 将服务器响应的信息添加到如下div#output
+                    beforeSubmit: beforeSubmit,  // pre-submit callback 
+                    success: afterSuccess,  // post-submit callback 
+                    resetForm: true        // reset the form after successful submit 
+                }; 
+                
+            $('#MyUploadForm').submit(function() { 
+                    $(this).ajaxSubmit(options);            
+                    // always return false to prevent standard browser submit and page navigation 
+                    return false; 
+                });
+
+            $('#imageInput').change(function(){
+                $('#MyUploadForm').submit();
+            });
+        }); 
+
+        //成功之后将头像更换掉
+        function afterSuccess()
+        {
+            var headerImg = $('input[name="headerImg"]').val();
+            $('img#headerImg').attr('src','/WxShop/Uploads/goodsImg/'+headerImg);
+
+        }
+
+        //function to check file size before uploading.
+        function beforeSubmit(){
+            //check whether browser fully supports all File API
+           if (window.File && window.FileReader && window.FileList && window.Blob)
+            {
+                
+                if( !$('#imageInput').val()) //check empty input filed
+                {
+                    alert("Are you kidding me?");
+                    return false
+                }
+                
+                var fsize = $('#imageInput')[0].files[0].size; //get file size
+                var ftype = $('#imageInput')[0].files[0].type; // get file type
+                
+
+                //allow only valid image file types 
+                switch(ftype)
+                {
+                    case 'image/png': case 'image/gif': case 'image/jpeg': case 'image/pjpeg':
+                        break;
+                    default:
+                        alert("浏览器不兼容，请更换浏览器后重试(Unsupported file type!)");
+                        return false
+                }
+                
+                //Allowed file size is less than 1 MB (1048576)
+                if(fsize>1048576) 
+                {
+                    alert("<b>"+bytesToSize(fsize) +"</b> Too big Image file! <br />Please reduce the size of your photo using an image editor.");
+                    return false
+                }
+                        
+                $('#submit-btn').hide(); //hide submit button
+                $('#loading-img').show(); //hide submit button 
+            }
+            else
+            {
+                //Output error to older browsers that do not support HTML5 File API
+                alert("Please upgrade your browser, because your current browser lacks some new features we need!");
+                return false;
+            }
+        }
+
+        //function to format bites bit.ly/19yoIPO
+        function bytesToSize(bytes) {
+           var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+           if (bytes == 0) return '0 Bytes';
+           var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+           return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+        }
 </script>
 </html>

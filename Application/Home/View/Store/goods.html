@@ -5,6 +5,7 @@
 <link href="__PUBLIC__/css/zy.css" rel="stylesheet" type="text/css" />
 <meta id="viewport" name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,minimal-ui">
 <script src="__PUBLIC__/js/jquery.js"></script>
+<script type="text/javascript" src='__PUBLIC__/js/tool.js'></script>
 <style type="text/css">
   .circle{
     background: none repeat scroll 0 0 #FF3300;
@@ -15,6 +16,12 @@
     margin-right: 10px;
     clear:both;
 }
+
+.fl{position:relative;}
+.spfl{width:32%;height:auto; background-color:#f2f2f2; position:fixed;bottom: 50px;}
+.spfl li{ height:50px;width:100%; border-bottom:#b6b6b6 1px solid; text-align:center; line-height:50px;}
+.spfl li a{ color:#333; font-size:16px; font-family:"方正黑体简体"}
+
 </style>
 <title>微店</title>
 </head>
@@ -29,8 +36,8 @@
         <div class="dian"><img src="__PUBLIC__/images/dian_03.png">微店<span class="dian1">商品详情</span></div>
          <div class="xin"><img src="__PUBLIC__/images/xin_09.png"></div>
         <div class="huitiao2"></div>
-      </div>
-      <div class="yl_k">
+    </div>
+    <div class="yl_k">
         <div class="yl_1">
         	<img src="/WxShop/Uploads/goodsImg/{$goods.headerImg}"width="100%"height="143px">
             <p class="yl_p1">{$goods.name}</p>
@@ -62,7 +69,7 @@
         </div>
         <div  class="yl_4"><p>邀请卖家开通担保交易，购物更放心！</p></div>
         <div class="yl_5">
-        	<a href="__URL__/shopViewDis?store_id={$store.id}"><img src="__PUBLIC__/images/yl-2_03.png"></a>
+        	<a href="__URL__/shopViewDis?store_id={$store.id}"><img src="/WxShop/Uploads/avatar/{$store.avatar}" style="width:50px;"></a>
             <p class="yl_p6"><a href="__URL__/shopViewDis?store_id={$store.id}">{$store.title}</a></p>
             <div class="yl_ht"></div>
             <p class="yl_p7"><a href="__URL__/shopViewDis?store_id={$store.id}">进入店铺</a></p>
@@ -75,25 +82,30 @@
       </div>
 
      <div class="db1">
-       		<ul>
-            	<li><img src="__PUBLIC__/images/fdj.png"></li>
-            	<li class="line"><a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">商品分类</a>
-        <div id="light" class="white_content">该店家暂未设置分类 <a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">关闭</a></div> 
-        <div id="fade" class="black_overlay"></div> </li>
+       	<ul>
+            <li class="fl">
+               
+                <empty name="type">
+                    <a href = "#" id="cat" has_cat="0">商品分类</a>
+                    <else/>
+                    <a href = "#" id="cat" has_cat="1">商品分类</a>
+                </empty>
+
+            </li>
       			<li class="line"><a href="wdwd1.html">我的微店</a></li>
       			<li class="line"><a href="gwc.html" class="shopping_cart">购物车<span class="circle">1</span></a></li>
-  			</ul>
-            <div class="tb_content">
-            	<div class="search_left">
-                	<a  class="tb_title"></a>
-                </div>
-                <form action="" method="get">
-                	<input  class="block"type="search" placeholder="搜索本店铺商品">
-                    <a class="search">搜索</a> 
-                </form>
-            </div>
-    </div>
+  			</ul>     
+      </div>
+
+      <div class="spfl" style='display:none'>
+            <ul>
+                <volist name="type" id="vo">
+                    <li><a href="{:U('Home/Store/shopViewDis',array('store_id'=>$store['id'],'type_id'=>$vo['id']))}">{$vo.name}</a></li>
+                </volist>        
+            </ul>
+        </div>
 </div>
+
 </body>
 <script>
   $(function(){
@@ -188,5 +200,24 @@
     }
   }
 });
+</script>
+<script type="text/javascript">
+  
+  $('#cat').click(function(event){
+      event.preventDefault();
+      var has_cat = $(this).attr('has_cat');
+
+      if (has_cat == '0') {
+        alert('该商家还未设置分类');
+      }else{
+        if ($('.spfl').is(":hidden")) {
+            $('.spfl').show();
+        }else{
+            $('.spfl').hide();
+        };
+
+      };
+    
+  });
 </script>
 </html>

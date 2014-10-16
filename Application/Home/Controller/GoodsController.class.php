@@ -43,13 +43,15 @@
 		 */
 		public function goodsAddPro(){
 			$store = session('store');
-			$headerImg = session('headerImg');
+			$headerImg = I('post.headerImg');
+			if ($headerImg) {
+				$data['headerImg'] = $headerImg;
+			}
 
 			$data['name'] = I('post.name');
 			$data['description'] = I('post.description');
 			$data['retailPrice'] = I('post.retailPrice');
 			$data['remainingQuantity'] = I('post.remainingQuantity');
-			$data['headerImg'] = $headerImg;
 			$data['type_id'] = I('post.type_id');
 			$data['store_id'] = $store['id'];
 			$data['status'] = 1;
@@ -88,24 +90,20 @@
 		 */
 		public function goodsUpdatePro(){
 			$store = session('store');
-			$headerImg = session('headerImg');
-			if (!empty($headerImg)) {
+			$headerImg = I('post.headerImg');
+			if ($headerImg) {
 				$data['headerImg'] = $headerImg;
 			}
-			$data['id'] = I('post.id');
-			$data['name'] = I('post.name');
-			$data['description'] = I('post.description');
-			$data['retailPrice'] = I('post.retailPrice');
+			$data['id']                = I('post.id');
+			$data['name']              = I('post.name');
+			$data['description']       = I('post.description');
+			$data['retailPrice']       = I('post.retailPrice');
 			$data['remainingQuantity'] = I('post.remainingQuantity');
-			$data['type_id'] = I('post.type_id');
-			$data['store_id'] = $store['id'];
-			$data['status'] = 1;
-			$data['time'] = time();
-			if ($data['type_id'] == -1) {
-				$ret['status'] = false;
-				$ret['info'] = '请选择分类';
-				goto end;
-			}
+			$data['type_id']           = I('post.type_id');
+			$data['store_id']          = $store['id'];
+			$data['status']            = 1;
+			$data['time']              = time();
+
 			$is_add = M('Goods')->save($data);
 			if (!$is_add) {
 				$ret['status'] = false;
@@ -125,7 +123,7 @@
 		 */
 		public function categoryAddDis(){
 			$store = session('store');
-			$this->cat = M('type')->where(array('store_id'=>$store['id']))->select();
+			$this->cat = M('Type')->where(array('store_id'=>$store['id']))->select();
 			$this->display('categoryAdd');
 		}
 
@@ -175,40 +173,6 @@
 			$this->ajaxReturn($ret);
 		}
 
-		//图片上传
-		public function imgUpload(){
-			$upload = new \Think\Upload();// 实例化上传类
-		    $upload->maxSize   =     3145728 ;// 设置附件上传大小
-		    $upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
-		    $upload->savePath  =     './goodsImg/';// 设置附件上传目录,Uploads目录下
-		    $upload->autoSub   =     false; //使用子目录上传
-		    // 上传文件 
-		    $info   =   $upload->uploadOne($_FILES['pic']);
-		    $path = $info['savepath'].$info['savename'];
-		    //　将头像图片存入数据库
-		    $auth = session('auth');
-		    $data['id'] = $auth['store_id'];
-		    $data['avatar'] = $info['savename'];
-		    $data['time'] = time();
-		    M('Store')->save($data);
-		    //　剪裁图片
-		    // $this->imgCut("./Uploads/goodsImg/".$info['savename']);
-		    //将图片写入session，以便在前台调用
-		    // sleep(2);
-		    session('headerImg',$info['savename']);
-		}
-
-		//对图片进行缩略，并强制控制大小
-		public function imgCut($imgPath){
-			$image = new \Think\Image(); 
-			$image->open($imgPath);
-			$image->thumb(100, 100,\Think\Image::IMAGE_THUMB_FIXED)->save($imgPath);
-		}
-
-		// 对前端头像图片请求进行响应
-		public function imgResponse(){
-			$this->ajaxReturn(session('headerImg'));
-		}
 	}
 
  ?>

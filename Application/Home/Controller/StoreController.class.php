@@ -29,7 +29,7 @@
 			$this->store = M('Store')->where(array('id'=>$store['id']))->find();
 			//获取该商家的所有商品
 			$this->goods = M('Goods')->where(array('store_id'=>$store['id'],'status'=>1))->order('time desc')->select();
-			// var_dump($auth);
+			// var_dump($this->store);
 			$this->display('shop');
 		}
 
@@ -56,8 +56,8 @@
 			if (empty($store['id'])) {
 				$this->error('请登陆后再进行操作',U('Home/Regist/login'));
 			}
-			$avatar = session('avatar');
-			if (!empty($avatar)) {
+			$avatar = I('post.avatar');
+			if ($avatar) {
 				$data['avatar'] = $avatar;
 			}
 			$data['id']    = $store['id'];
@@ -80,11 +80,24 @@
 		/**
 		 * [用户部分]商家店铺预览
 		 */
-		public function shopViewDis($store_id){
+		public function shopViewDis($store_id,$type_id = ''){
+			
 			//获取店家的基本信息
 			$this->store = M('Store')->where(array('id'=>$store_id))->find();
+
 			//获取该商家的所有商品
-			$this->goods = M('Goods')->where(array('store_id'=>$store_id,'status'=>1))->order('time desc')->select();
+			if ($type_id != '') {
+				$data['type_id'] = $type_id;
+				//获取该商品的分类
+				$this_goods_type = M('Type')->where(array('id'=>$type_id))->find();
+				$this->this_goods_type = $this_goods_type['name'];
+			}
+			$data['store_id'] = $store_id;
+			$data['status']   = 1;
+			$this->goods = M('Goods')->where($data)->order('time desc')->select();
+
+			//获取该商家的商品分类
+			$this->type = M('Type')->where(array('store_id'=>$this->store['id']))->select();
 			$this->display('shopView');
 		}
 
@@ -92,45 +105,14 @@
 		 * [用户部分]商品展示
 		 */
 		public function goodsDis($goods_id){
+			//获取该商品信息
 			$this->goods = M('Goods')->where(array('id'=>$goods_id))->find();
-			// 获取商家信息
+			//获取商家信息
 			$store_id = $this->goods['store_id'];
 			$this->store = M('Store')->where(array('id'=>$store_id))->find();
+			//获取该商家的商品分类
+			$this->type = M('Type')->where(array('store_id'=>$this->store['id']))->select();
 			$this->display('goods');
-		}
-
-		//图片上传
-		public function imgUpload(){
-			$upload = new \Think\Upload();// 实例化上传类
-		    $upload->maxSize   =     3145728 ;// 设置附件上传大小
-		    $upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
-		    $upload->savePath  =     './avatar/';// 设置附件上传目录,Uploads目录下
-		    $upload->autoSub   =     false; //使用子目录上传
-		    // 上传文件 
-		    $info   =   $upload->uploadOne($_FILES['pic']);
-		    $path = $info['savepath'].$info['savename'];
-		    //　将头像图片存入数据库
-		    $auth = session('auth');
-		    $data['id'] = $auth['store_id'];
-		    $data['avatar'] = $info['savename'];
-		    $data['time'] = time();
-		    M('Store')->save($data);
-		    //　剪裁图片
-		    $this->imgCut("./Uploads/avatar/".$info['savename']);
-		    //将图片写入session，以便在前台调用
-		    session('avatar',$info['savename']);
-		}
-
-		//对图片进行缩略，并强制控制大小
-		public function imgCut($imgPath){
-			$image = new \Think\Image(); 
-			$image->open($imgPath);
-			$image->thumb(93, 93,\Think\Image::IMAGE_THUMB_FIXED)->save($imgPath);
-		}
-
-		// 对前端头像图片请求进行响应
-		public function imgResponse(){
-			$this->ajaxReturn(session('avatar'));
 		}
 
 	}

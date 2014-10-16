@@ -10,6 +10,22 @@
   .x_text{ float:left; margin-left:5%;margin-top: 5% }
   .x_cp{width:45%;height:250px; background-color:#FFF; float:left; margin:0 2%; margin-top:5%}
   .x_jq{ color:#b94545;font-size:16px; line-height:150%; text-indent:24px; margin-top:10%;margin-left: -10px;}
+
+  .circle{
+    background: none repeat scroll 0 0 #FF3300;
+    border-radius: 78.5px 78.5px 78.5px 78.5px;
+    color: #FFFFFF;
+    padding:1px 5px;
+    position: relative;
+    margin-right: 10px;
+    clear:both;
+  }
+
+  .fl{position:relative;}
+  .spfl{width:32%;height:auto; background-color:#f2f2f2; position:fixed;bottom: 50px;}
+  .spfl li{ height:50px;width:100%; border-bottom:#b6b6b6 1px solid; text-align:center; line-height:50px;}
+  .spfl li a{ color:#333; font-size:16px; font-family:"方正黑体简体"}
+
 </style>
 <title>微店</title>
 </head>
@@ -37,7 +53,7 @@
       </div>
      
     <div class="x_dztj">
-    	<p class="x_tj">本店产品</p>
+    	<p class="x_tj">本店产品&nbsp;<span style="font-size:12px" class="typeText">{$this_goods_type}</span></p>
           <volist name="goods" id="vo">
             <a href="__URL__/goodsDis?goods_id={$vo.id}">
               <div class="x_cp">
@@ -54,24 +70,141 @@
      </div>
      
      <div class="db1">
-       		<ul>
-            	<li><img src="__PUBLIC__/images/fdj.png"></li>
-            	<li class="line"><a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">商品分类</a>
-        <div id="light" class="white_content">该店家暂未设置分类 <a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">关闭</a></div> 
-        <div id="fade" class="black_overlay"></div> </li>
-      			<li class="line"><a href="wdwd1.html">我的微店</a></li>
-      			<li class="line"><a href="gwc.html">购物车</a></li>
-  			</ul>
-            <div class="tb_content">
-            	<div class="search_left">
-                	<a  class="tb_title"></a>
-                </div>
-                <form action="" method="get">
-                	<input  class="block"type="search" placeholder="搜索本店铺商品">
-                    <a class="search">搜索</a> 
-                </form>
-            </div>
-    </div>
+        <ul>
+            <li class="fl">
+               
+                <empty name="type">
+                    <a href = "#" id="cat" has_cat="0">商品分类</a>
+                    <else/>
+                    <a href = "#" id="cat" has_cat="1">商品分类</a>
+                </empty>
+
+            </li>
+            <li class="line"><a href="wdwd1.html">我的微店</a></li>
+            <li class="line"><a href="gwc.html" class="shopping_cart">购物车<span class="circle">1</span></a></li>
+        </ul>     
+      </div>
+
+      <div class="spfl" style='display:none'>
+            <ul>
+                <volist name="type" id="vo">
+                    <li><a href="{:U('Home/Store/shopViewDis',array('store_id'=>$store['id'],'type_id'=>$vo['id']))}">{$vo.name}</a></li>
+                </volist>         
+            </ul>
+        </div>
 </div>
 </body>
+<script>
+  $(function(){
+    var $span_val = $('.shopping_cart>span');
+    var _count = $span_val.html();
+    if(_count==''){
+      $span_val.hide();
+    }else{
+      $span_val.show();
+    }
+  });
+</script>
+<script>
+  jQuery.extend( {
+  min : 1,
+  reg : function(x) {
+    jQuery('#J_Tip').html("");
+    jQuery('#J_Tip').hide();
+    return new RegExp("^[1-9]\\d*$").test(x);
+  },
+  amount : function(obj, mode) {
+    var x = jQuery(obj).val();
+    if (this.reg(parseInt(x))) {
+      if (mode) {
+        x++;
+      } else {
+        x--;
+      }
+    } else {
+
+      jQuery('#J_Tip').html("*请输入正确的数量！");
+      jQuery('#J_Tip').css("color","red");
+      jQuery('#J_Tip').show();
+      jQuery(obj).val(1);
+      jQuery(obj).focus();
+    }
+    return x;
+  },
+  reduce : function(obj) {
+    var x = this.amount(obj, false);
+    if (parseInt(x) >= this.min) {
+      jQuery(obj).val(x);
+    } else {
+
+      jQuery('#J_Tip').html("*商品数量最少为" + this.min
+          + "！");
+      jQuery('#J_Tip').css("color","red");
+      jQuery('#J_Tip').show();
+      jQuery(obj).val(1);
+      jQuery(obj).focus();
+    }
+  },
+  add : function(obj) {
+    var x = this.amount(obj, true);
+    var max = jQuery('#nAmount').val();
+    if (parseInt(x) <= parseInt(max)) {
+      jQuery(obj).val(x);
+    } else {
+      jQuery('#J_Tip').html("*商品数量超过库存！");
+      jQuery('#J_Tip').css("color","red");
+      jQuery('#J_Tip').show();
+      jQuery(obj).val(max == 0 ? 1 : max);
+      jQuery(obj).focus();
+    }
+  },
+  modify : function(obj) {
+    var x = jQuery(obj).val();
+    var max = jQuery('#nAmount').val();
+    if (!this.reg(parseInt(x))) {
+      jQuery(obj).val(1);
+      jQuery(obj).focus();
+      jQuery('#J_Tip').html("*请输入正确的数量！");
+      jQuery('#J_Tip').css("color","red");
+      jQuery('#J_Tip').show();
+      return;
+    }
+    var intx = parseInt(x);
+    var intmax = parseInt(max);
+    if (intx < this.min) {
+      jQuery('#J_Tip').html("*商品数量最少为" + this.min
+          + "！");
+      jQuery('#J_Tip').css("color","red");
+      jQuery('#J_Tip').show();
+      jQuery(obj).val(this.min);
+      jQuery(obj).focus();
+    } else if (intx > intmax) {
+      jQuery('#J_Tip').html("*商品数量超过库存！");
+      jQuery('#J_Tip').css("color","red");
+      jQuery('#J_Tip').show();
+      jQuery(obj).val(max == 0 ? 1 : max);
+      jQuery(obj).focus();
+    }
+  }
+});
+</script>
+<script type="text/javascript">
+  
+  $('#cat').click(function(event){
+      event.preventDefault();
+      var has_cat = $(this).attr('has_cat');
+
+      if (has_cat == '0') {
+        alert('该商家还未设置分类');
+      }else{
+        if ($('.spfl').is(":hidden")) {
+            $('.spfl').show();
+        }else{
+            $('.spfl').hide();
+        };
+
+      };
+    
+  });
+</script>
 </html>

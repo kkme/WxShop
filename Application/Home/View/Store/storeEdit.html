@@ -8,6 +8,7 @@
 <meta name="keywords" content="">
 <script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/tool.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.min.js"></script>
 <link href="__PUBLIC__/css/weidian.css" rel="stylesheet" type="text/css">
 <style type="text/css">
     /*编辑店铺*/
@@ -41,71 +42,42 @@
     </div>
 	<div class="bj1_k">
     	<div class="bj_1">
-        	<img src="/WxShop/Uploads/avatar/{$store.avatar}" id="headerImg">
+            <div class="renxiang">
+                <form action="/WxShop/avatarUpload.php" method="post" enctype="multipart/form-data" id="MyUploadForm">
+                   <img src="/WxShop/Uploads/avatar/{$store.avatar}" id="avatar">
+                    <input name="image_file" id="imageInput" type="file" style="position:absolute;left:11%;top:110px;height:93px;width:93px;opacity:0;"/>
+                </form>
+            </div>
             <p>点击图片编辑店铺图标</p>
-            <form action="__URL__/imgUpload" method="post" enctype="multipart/form-data" target="hidden_frame" id="pic">
-                <input type="file" name="pic" style="visibility:hidden"/>
-                <input type="submit" value="submit" style="visibility:hidden"/>
-            </form>
-            <iframe name='hidden_frame' id="hidden_frame" style='display:none'></iframe>
         </div>
         <div class="bj1_2">
         	<div class="bj1_dp">店铺名称</div>
-            <form action="" method="get">
-            	<input type="text" value="{$store.title}" name="title">
-            </form>
+            <input type="text" value="{$store.title}" name="title">
         </div>
         <div class="bj1_3">
         	<div class="bj1_dp">店铺公告</div>
-            <form action="" method="get">
-            	<input type="text" value="{$store.intro}" name="intro">
-            </form>
-           
+            <input type="text" value="{$store.intro}" name="intro">
         </div>
-    
+        <div id="output" style="display:none">
+            <input type="hidden" name="avatar" value="">
+        </div>   
     </div> 
 </div>
 </body>
 </html>
 <script type="text/javascript">
-    $('#headerImg').click(function(){
-            $('input[name="pic"]').click();
-    });
-    $('input[name="pic"]').change(function(){
-        //模拟点击提交按钮
-        $('input[type="submit"]').click();
-        //模拟进度条，给图片上传争取时间
-        var i = 0;
-        time = setInterval(function(){
-            i++;
-            $('.bj_1 p').text(i+'%');
-            if (i == 100) {
-                $('.bj_1 p').text('图片上传完成，点击可重新上传');
-                clearInterval(time);
-                //向服务器端获取这个图片在服务器上的位置
-                $.post('__URL__/imgResponse',function(data){
-                    if (data == '') {
-                        alert('未知错误,错误代码:005');
-                    }else{
-                       $('#headerImg').attr('src',"/WxShop/Uploads/avatar/"+data);
-                    };
-                });
-            };
-        },50);
-
-    });  
 
     //完成提交
-
     $('#finish').click(function(event){
         event.preventDefault();
         var title = $('input[name="title"]').val();
         var intro = $('input[name="intro"]').val();
+        var avatar = $('input[name="avatar"]').val();
         if (title == '' || intro == '') {
             alert('请输入正确的店铺名和店铺公告');
             return 0;
         };
-        $.post('__URL__/storeEditPro',{title:title,intro:intro},function(data){
+        $.post('__URL__/storeEditPro',{title:title,intro:intro,avatar:avatar},function(data){
             if (data.status) {
                 alert('店铺编辑成功');
                 location.href = "__URL__/shopDis";
@@ -114,4 +86,84 @@
             };
         });
     });
+
+    //商品图片上传
+    $(document).ready(function() { 
+            var options = { 
+                    target: '#output',   // 将服务器响应的信息添加到如下div#output
+                    beforeSubmit: beforeSubmit,  // pre-submit callback 
+                    success: afterSuccess,  // post-submit callback 
+                    resetForm: true        // reset the form after successful submit 
+                }; 
+                
+            $('#MyUploadForm').submit(function() { 
+                    $(this).ajaxSubmit(options);            
+                    // always return false to prevent standard browser submit and page navigation 
+                    return false; 
+                });
+
+            $('#imageInput').change(function(){
+                $('#MyUploadForm').submit();
+            });
+        }); 
+
+        //成功之后将头像更换掉
+        function afterSuccess()
+        {
+            var avatar = $('input[name="avatar"]').val();
+            $('img#avatar').attr('src','/WxShop/Uploads/avatar/'+avatar);
+
+        }
+
+        //function to check file size before uploading.
+        function beforeSubmit(){
+            //check whether browser fully supports all File API
+           if (window.File && window.FileReader && window.FileList && window.Blob)
+            {
+                
+                if( !$('#imageInput').val()) //check empty input filed
+                {
+                    alert("Are you kidding me?");
+                    return false
+                }
+                
+                var fsize = $('#imageInput')[0].files[0].size; //get file size
+                var ftype = $('#imageInput')[0].files[0].type; // get file type
+                
+
+                //allow only valid image file types 
+                switch(ftype)
+                {
+                    case 'image/png': case 'image/gif': case 'image/jpeg': case 'image/pjpeg':
+                        break;
+                    default:
+                        alert("浏览器不兼容，请更换浏览器后重试(Unsupported file type!)");
+                        return false
+                }
+                
+                //Allowed file size is less than 1 MB (1048576)
+                if(fsize>1048576) 
+                {
+                    alert("<b>"+bytesToSize(fsize) +"</b> Too big Image file! <br />Please reduce the size of your photo using an image editor.");
+                    return false
+                }
+                        
+                $('#submit-btn').hide(); //hide submit button
+                $('#loading-img').show(); //hide submit button 
+            }
+            else
+            {
+                //Output error to older browsers that do not support HTML5 File API
+                alert("Please upgrade your browser, because your current browser lacks some new features we need!");
+                return false;
+            }
+        }
+
+        //function to format bites bit.ly/19yoIPO
+        function bytesToSize(bytes) {
+           var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+           if (bytes == 0) return '0 Bytes';
+           var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+           return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+        }
 </script>

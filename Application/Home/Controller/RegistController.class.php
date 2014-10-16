@@ -9,7 +9,8 @@
 		 */
 		public function sendCode(){
 			$phone = I('post.phone');
-			$rand_num = rand(1000,9999);
+			// $rand_num = rand(1000,9999);
+			$rand_num = 111;
 			// 判断是否已经注册
 			if(M('Store')->where(array('shoper_phone'=>$phone))->find()){
 				$ret['status'] = false;
@@ -21,7 +22,7 @@
 			if (!$this->sendMessage($phone,$rand_num)) {
 				$ret['status'] = false;
 				$ret['info'] = '未知错误,错误代码:0002，请联系客服解决';
-				goto end;
+				// goto end;
 			}
 
 			//写入session
@@ -131,44 +132,13 @@
 		/**
 		 * 注册第五步，添加商店信息
 		 */
-		
-		//图片上传
-		public function imgUpload(){
-			$upload = new \Think\Upload();// 实例化上传类
-		    $upload->maxSize   =     3145728 ;// 设置附件上传大小
-		    $upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
-		    $upload->savePath  =     './avatar/';// 设置附件上传目录,Uploads目录下
-		    $upload->autoSub   =     false; //使用子目录上传
-		    // 上传文件 
-		    $info   =   $upload->uploadOne($_FILES['pic']);
-		    $path = $info['savepath'].$info['savename'];
-		    //　剪裁图片
-		    $this->imgCut("./Uploads/avatar/".$info['savename']);
-		    session('avatar',$info['savename']);
-		}
-
-		//对图片进行缩略，并强制控制大小
-		public function imgCut($imgPath){
-			$image = new \Think\Image(); 
-			$image->open($imgPath);
-			$image->thumb(93, 93,\Think\Image::IMAGE_THUMB_FIXED)->save($imgPath);
-		}
-
-		// 对前端头像图片请求进行响应
-		public function imgResponse(){
-			$this->ajaxReturn(session('avatar'));
-		}
-
 		//　处理商家信息
 		public function setStorePro(){
 			$auth = session('auth');
-			$avatar = session('avatar');
-			if ($avatar) {
-				$data['avatar'] = $avatar;
-			}
-			$data['id'] = $auth['store_id'];
-			$data['title'] = I('post.title');
-			$data['intro'] = I('post.intro');
+			$data['id']     = $auth['store_id'];
+			$data['title']  = I('post.title');
+			$data['intro']  = I('post.intro');
+			$data['avatar'] = I('post.avatar','example.jpg');
 			$is_up = M('Store')->save($data);
 			if (!is_up) {
 				$ret['status'] = false;

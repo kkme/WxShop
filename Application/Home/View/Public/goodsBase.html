@@ -1,0 +1,179 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link href="__PUBLIC__/css/zy.css" rel="stylesheet" type="text/css" />
+<meta id="viewport" name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,minimal-ui">
+<script src="__PUBLIC__/js/jquery.js"></script>
+<script type="text/javascript" src='__PUBLIC__/js/tool.js'></script>
+<style type="text/css">
+  .circle{
+    background: none repeat scroll 0 0 #FF3300;
+    border-radius: 78.5px 78.5px 78.5px 78.5px;
+    color: #FFFFFF;
+    padding:1px 5px;
+    position: relative;
+    margin-right: 10px;
+    clear:both;
+}
+
+.fl{position:relative;}
+.spfl{width:32%;height:auto; background-color:#f2f2f2; position:fixed;bottom: 50px;}
+.spfl li{ height:50px;width:100%; border-bottom:#b6b6b6 1px solid; text-align:center; line-height:50px;}
+.spfl li a{ color:#333; font-size:16px; font-family:"方正黑体简体"}
+
+</style>
+<title>微店</title>
+</head>
+<body>
+<div class="box" style=" padding-bottom:51px;">
+	<div class="top">
+    	<a class="tjt" href="javascript:history.go(-1);"><img src="__PUBLIC__/images/tjt_03.png"></a>
+        <a class="a1">预览商品</a>
+        <a class="a5" href="#">刷新</a>
+    </div>
+
+    <block name="content">
+      商品展示内容 
+    </block>
+
+     <div class="db1">
+       	<ul>
+            <li class="fl">
+               
+                <empty name="type">
+                    <a href = "#" id="cat" has_cat="0">商品分类</a>
+                    <else/>
+                    <a href = "#" id="cat" has_cat="1">商品分类</a>
+                </empty>
+
+            </li>
+      			<li class="line"><a href="wdwd1.html">我的微店</a></li>
+      			<li class="line"><a href="gwc.html" class="shopping_cart">购物车<span class="circle">1</span></a></li>
+  			</ul>     
+      </div>
+
+      <div class="spfl" style='display:none'>
+            <ul>
+                <volist name="type" id="vo">
+                    <li><a href="#">{$vo.name}</a></li>
+                </volist>         
+            </ul>
+        </div>
+</div>
+
+</body>
+<script>
+  $(function(){
+    var $span_val = $('.shopping_cart>span');
+    var _count = $span_val.html();
+    if(_count==''){
+      $span_val.hide();
+    }else{
+      $span_val.show();
+    }
+  });
+  jQuery.extend( {
+  min : 1,
+  reg : function(x) {
+    jQuery('#J_Tip').html("");
+    jQuery('#J_Tip').hide();
+    return new RegExp("^[1-9]\\d*$").test(x);
+  },
+  amount : function(obj, mode) {
+    var x = jQuery(obj).val();
+    if (this.reg(parseInt(x))) {
+      if (mode) {
+        x++;
+      } else {
+        x--;
+      }
+    } else {
+
+      jQuery('#J_Tip').html("*请输入正确的数量！");
+      jQuery('#J_Tip').css("color","red");
+      jQuery('#J_Tip').show();
+      jQuery(obj).val(1);
+      jQuery(obj).focus();
+    }
+    return x;
+  },
+  reduce : function(obj) {
+    var x = this.amount(obj, false);
+    if (parseInt(x) >= this.min) {
+      jQuery(obj).val(x);
+    } else {
+
+      jQuery('#J_Tip').html("*商品数量最少为" + this.min
+          + "！");
+      jQuery('#J_Tip').css("color","red");
+      jQuery('#J_Tip').show();
+      jQuery(obj).val(1);
+      jQuery(obj).focus();
+    }
+  },
+  add : function(obj) {
+    var x = this.amount(obj, true);
+    var max = jQuery('#nAmount').val();
+    if (parseInt(x) <= parseInt(max)) {
+      jQuery(obj).val(x);
+    } else {
+      jQuery('#J_Tip').html("*商品数量超过库存！");
+      jQuery('#J_Tip').css("color","red");
+      jQuery('#J_Tip').show();
+      jQuery(obj).val(max == 0 ? 1 : max);
+      jQuery(obj).focus();
+    }
+  },
+  modify : function(obj) {
+    var x = jQuery(obj).val();
+    var max = jQuery('#nAmount').val();
+    if (!this.reg(parseInt(x))) {
+      jQuery(obj).val(1);
+      jQuery(obj).focus();
+      jQuery('#J_Tip').html("*请输入正确的数量！");
+      jQuery('#J_Tip').css("color","red");
+      jQuery('#J_Tip').show();
+      return;
+    }
+    var intx = parseInt(x);
+    var intmax = parseInt(max);
+    if (intx < this.min) {
+      jQuery('#J_Tip').html("*商品数量最少为" + this.min
+          + "！");
+      jQuery('#J_Tip').css("color","red");
+      jQuery('#J_Tip').show();
+      jQuery(obj).val(this.min);
+      jQuery(obj).focus();
+    } else if (intx > intmax) {
+      jQuery('#J_Tip').html("*商品数量超过库存！");
+      jQuery('#J_Tip').css("color","red");
+      jQuery('#J_Tip').show();
+      jQuery(obj).val(max == 0 ? 1 : max);
+      jQuery(obj).focus();
+    }
+  }
+});
+
+  
+  $(function(){
+    $('#cat').click(function(event){
+      event.preventDefault();
+      var has_cat = $(this).attr('has_cat');
+
+      if (has_cat == '0') {
+        alert('该商家还未设置分类');
+      }else{
+        if ($('.spfl').is(":hidden")) {
+            $('.spfl').show();
+        }else{
+            $('.spfl').hide();
+        };
+
+      };
+    
+  });
+  });
+
+</script>
+</html>

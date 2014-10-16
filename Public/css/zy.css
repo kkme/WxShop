@@ -183,12 +183,12 @@ ul{ list-style-type:none;}
 .dm1 a{ float:left; color:#8f8f8f; font-size:18px; margin-left:25px; line-height:100px}
 .db1{ float:left; width:100%; height:50px; position:fixed; bottom:0; background:#f2f2f2;}
 .db1 img{ margin-top:12%}
-.db1 li{ list-style:none; float:left; width:24%; height:50px; line-height:50px; text-align:center;}
+.db1 li{ list-style:none; float:left; width:32%; height:50px; line-height:50px; text-align:center;}
 .db1 li a,.db1 li a:hover{ color:#4e4e4e;}
 .line{ border-left:1px solid #ccc;}
-.black_overlay{display: none;  position: fixed; top: 0%; left: 0%; width: 100%; height: 100%; background-color:#ccc; z-index:1001; -moz-opacity: 0.4; opacity:.40; filter: alpha(opacity=88); } 
-.white_content { display: none; position: fixed; top:40%; left: 20%; width: 55%; height: 8%;  padding: 20px; background-color:white;  z-index:1002; 
-overflow: auto; } 
+
+.white_content {display:inline;position: fixed; top:40%; left: 20%; width: 55%; height: 8%;  padding: 20px; background-color:#f1f1f1;  z-index:1002; 
+overflow: auto;text-align: center;line-height: 40px; } 
 /*分成推广*/
 .baik1{width:100%;height:40px; background-color:#f2f2f2; margin:0 auto;}
 .fc{ line-height:40px; text-align:center; font-size:18px; color:#7f7f7f}

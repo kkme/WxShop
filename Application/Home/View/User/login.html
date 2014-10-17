@@ -30,19 +30,19 @@
             var phone = $('input[name="phone"]').val();
             var password = $('input[name="password"]').val();
             event.preventDefault();
+            p(phone+":"+password);
             $.post('__URL__/loginPro',{phone:phone,password:password},function(data){
                 if (data.status) {
-                    location.href = "{:U('Home/Store/shopDis')}";
+                    location.href = '{:U("Home/Store/shopViewDis",array("store_id"=>14))}';
                 }else{
                     alert(data.info);
                 };
             });
         });
-
-        $('.zc_hm[name="hidepassword"]').focus(function(){
-            $(this).hide();
-            $('.zc_hm[name="password"]').show().focus();
-        });
         
+        $('input[name="hidepassword"]').focus(function(){
+            $(this).hide();
+            $('input[name="password"]').show().focus();
+        });
     </script>
 </block>

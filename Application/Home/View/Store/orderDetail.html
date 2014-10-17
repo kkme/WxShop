@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" name="viewport" />
+<link href="__PUBLIC__/css/zy.css" rel="stylesheet" type="text/css" />
+<script src="__PUBLIC__/js/jquery.js"></script>
+<script src="__PUBLIC__/js/tool.js"></script>
+<title>微店</title>
+</head>
+<body>
+<div class="box">
+	<div class="top">
+    	<a class="tjt" href="javascript:history.go(-1);"><img src="__PUBLIC__/images/tjt_03.png"></a>
+        <a class="a1">订单管理</a>
+    </div>
+    <div class="gl2_k">
+    	<div class="gl2_1">
+        	<div class="gl2_bh">
+            	<p class="gl2_p1">订单编号</p>
+                <p class="gl2_p2">{$this_order.id}</p>
+            </div>
+            <div class="gl2_bh">
+            	<p class="gl2_p1">下单账号</p>
+                <p class="gl2_p3">{$this_order.user_id|getUser=###,'phone'}</p>
+            </div>
+            <div class="gl2_bh">
+            	<p class="gl2_p1">订单类型</p>
+                <p class="gl2_p2">直接付款</p>
+            </div>
+            <div class="gl2_zt">
+            	<p class="gl2_p1">订单状态</p>
+                <p class="gl2_p4">
+                    <if condition="$this_order.status eq '0'">
+                        未完成
+                        <else/>
+                        已完成
+                    </if>
+                </p>
+            </div>
+        </div>
+        <p class="gl2_sh"> 收货人信息</p>
+        <div class="gl2_3">
+            <div class="gl2_name"><p>{$this_order.user_id|getUser=###,'name'}</p></div>
+            <div class="gl2_phone">
+            	<p class="gl2_p5">电话</p>
+                <p class="gl2_p6">{$this_order.user_id|getUser=###,'phone'}</p>
+            </div>
+            <div class="gl2_phone1">
+            	<p class="gl2_p5">地址</p>
+                <p class="gl2_p7">{$this_order.user_id|getUser=###,'address'}</p>
+            </div>
+            <div class="gl2_dz">
+            	<p class="gl2_p5">买家备注</p>
+                <p class="gl2_p7">{$this_order.consignee_comment}</p>
+            </div>
+        </div> 
+        <p class="gl2_sh">商品信息</p>  
+        <div class="gl2_4">
+        	<div class="gl2_cp">
+            	<img src="/WxShop/Uploads/goodsImg/{$this_order.goods_id|getGoods=###,'headerImg'}" style="width:70px;height:70px;">
+                <div class="gl2_r">
+                	<p class="gl2_p8">人民币</p>
+                    <p class="gl2_p9">{$this_order.goods_id|getGoods=###,'retailPrice'} x {$this_order.count}</p>
+                </div>
+            </div>
+            <div class="gl2_bh">
+            	<p class="gl2_p1">订单总价</p>
+                <p class="gl2_p2">￥{$this_order.total_price}</p>
+            </div>
+            <div class="gl2_bh">
+            	<p class="gl2_p1">运费</p>
+                <p class="gl2_p2">￥0.00</p>
+            </div>
+            <div class="gl2_zt">
+            	<p class="gl2_p1">订单优惠</p>
+                <p class="gl2_p2">无优惠</p>
+            </div>
+        </div>
+        <p class="gl2_sh"> 订单信息</p>
+        <div class="gl2_bh">
+            	<p class="gl2_p1">订单编号</p>
+                <p class="gl2_p2">{$this_order.id}</p>
+        </div>
+        <div class="gl2_bh">
+            	<p class="gl2_p1">下单时间</p>
+                <p class="gl2_p2">{$this_order.time|date='Y-m-d h:m:s',###}</p>
+        </div>
+        </div>
+</div>
+</body>
+</html>

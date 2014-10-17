@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" name="viewport" />
+<link href="__PUBLIC__/css/zy.css" rel="stylesheet" type="text/css" />
+<script src="__PUBLIC__/js/jquery.js"></script>
+<script src="__PUBLIC__/js/tool.js"></script>
+<title>微店</title>
+</head>
+<body>
+<div class="box">
+	<div class="top">
+    	<a class="tjt" href="javascript:history.go(-1);"><img src="__PUBLIC__/images/tjt_03.png"></a>
+        <a class="a1">订单管理</a>
+    </div>
+    <div class="cl">
+    	<ul>
+        	<li><a href="__URL__/orderDis">全部订单</a></li>
+            <li><a href="__URL__/orderDis/status/0">未付款</a></li>
+            <li><a href="__URL__/orderDis/status/1">已完成</a></li>
+        </ul>
+    <div class="dd">
+    	<div class="dd_cp"style="display:block">
+              <volist name='orders' id='vo'>
+                 <div class="dd_2">
+                      <a href="__URL__/orderDetailDis/order_id/{$vo.id}"><img class="gw_cp" src="/WxShop/Uploads/goodsImg/{$vo.goods_id|getGoods=###,'headerImg'}">
+                        <div class="ddgl_z">
+                          <p class="dd_p1">{$vo.consignee_name}</p>
+                          <p class="dd_p2">{$vo.consignee_phone}</p>
+                          <p class="dd_p3">{$vo.consignee_address}</p>
+                        </div>
+                      </a>
+                  </div>
+              </volist>
+          </div>
+    </div>
+</div>
+</body>
+</html>

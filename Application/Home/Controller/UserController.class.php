@@ -167,4 +167,30 @@ class UserController extends Controller {
 			$this->ajaxReturn($ret);
 		}
 
+		/**
+		 * 用户登陆处理
+		 */
+		public function loginPro(){
+			$data['phone'] = I('phone');
+			$data['password'] = I('password','','md5');
+			$user = M('User')->where($data)->find();
+			if (empty($user)) {
+				$ret['status'] = false;
+				$ret['info'] = '用户名或密码错误';
+				goto end;
+			}
+				$ret['status'] = true;
+				$ret['info'] = '用户登陆成功';
+				session('user',$user);
+			end:
+			$this->ajaxReturn($ret);
+		}
+
+		/**
+		 * 用户信息显示
+		 */
+		public function myInfoDis(){
+			$this->display('myInfo');
+		}
+
 }

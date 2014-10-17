@@ -64,7 +64,7 @@
            <div class="yl_c">
            		<div class="yl_gw"><a href="gwc_yl.html">我的购物车</a></div>
                 <div class="yl_jr"><a href="#">加入购物车</a></div>
-                <div class="yl_gm"><a href="gwc_gm.html">立即购买</a></div>
+                <div class="yl_gm"><a href="#" id='buyNow' goods_id='{$goods.id}'>立即购买</a></div>
            </div>
         </div>
         <div  class="yl_4"><p>邀请卖家开通担保交易，购物更放心！</p></div>
@@ -92,7 +92,7 @@
                 </empty>
 
             </li>
-      			<li class="line"><a href="wdwd1.html">我的微店</a></li>
+      			<li class="line"><a href="{:U('Home/User/myInfoDis')}">我的微店</a></li>
       			<li class="line"><a href="gwc.html" class="shopping_cart">购物车<span class="circle">1</span></a></li>
   			</ul>     
       </div>
@@ -219,5 +219,14 @@
       };
     
   });
+</script>
+<script type="text/javascript">
+    $('#buyNow').click(function(event){
+        event.preventDefault();
+        var goods_id = $(this).attr('goods_id');
+        var count    = $('#J_Amount').val();
+        url = '/WxShop/index.php/Home/Cart/buyNowDis?goods_id='+goods_id+"&count="+count;
+        location.href = url;
+    });  
 </script>
 </html>

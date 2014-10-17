@@ -78,6 +78,81 @@
 		}
 
 		/**
+		 * 商家订单管理
+		 */
+		public function orderDis($status = -1){
+			//如果没有登陆，跳转到登陆页面
+			$store = session('store');
+			if (empty($store['id'])) {
+				$this->error('请登陆后再进行操作',U('Home/Regist/login'));
+			}
+			if ($status != -1) {
+				$map['status'] = $status;
+			}
+			$map['store_id'] = $store['id'];
+			//获取商家订单
+			$this->orders = M('Order')->where($map)->order('time desc')->select();
+			$this->display('order');
+		}
+
+		/**
+		 * 订单详情
+		 */
+		public function orderDetailDis($order_id){
+			//如果没有登陆，跳转到登陆页面
+			$store = session('store');
+			if (empty($store['id'])) {
+				$this->error('请登陆后再进行操作',U('Home/Regist/login'));
+			}
+			//获取该订单
+			$this->this_order = M('Order')->where(array('id'=>$order_id))->find();
+			$this->display('orderDetail');
+		}
+
+		/**
+		 * 客户管理
+		 */
+		public function customerManageDis(){
+			$store = session('store');
+			if (empty($store['id'])) {
+				$this->error('请登陆后再进行操作',U('Home/Regist/login'));
+			}
+			//获取已完成交易
+			$orders = M('Order')->where(array('store_id'=>$store['id'],'status'=>1))->order('time desc')->select();
+			// 提取出所有的用户id
+			$users = array();
+			foreach ($orders as $key => $value) {
+				$user_id = $value['user_id'];
+				if (!in_array($user_id, $users)) {
+					$users[] = $user_id;
+				}
+			}
+			// 逆向排序
+			rsort($users);
+			$this->users = $users;
+			$this->display('customerManage');
+		}
+
+		/**
+		 * 我的收入
+		 */
+		public function myEarningDis(){
+			$this->display('myEarning');
+		}
+
+		/**
+		 * 销售管理
+		 */
+		public function salesManageDis(){
+			$this->display('salesManage');
+		}
+
+
+
+	/*****************************************************************************************/
+
+
+		/**
 		 * [用户部分]商家店铺预览
 		 */
 		public function shopViewDis($store_id,$type_id = ''){

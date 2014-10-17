@@ -45,7 +45,8 @@ ul{ list-style-type:none;}
 .xm{width:100%;height:40px; margin:0 auto; background-color:#FFF; clear:both}
 .xm input{width:95%;height:40px; border:none; float:right; color:#d2d2d2; font-size:12px; background:url(../images/ss_50.png) no-repeat left center; text-indent:48px;}
 .cl ul{width:100%;height:50px; background-color:#f1f1f1;}
-.cl li{ float:left;width:25%; line-height:50px; font-size:14px; text-align:center}
+.cl li{ float:left;width:30%; line-height:50px; font-size:14px; text-align:center}
+.cl li a{color: black}
 .kh li:hover,.cl li:hover{ color:#e01515}
 .dd{width:100%;height:670px; background-color:#e6e6e6; padding-top:5%;}
 .th{ background-image:url(../images/th_44.png); background-repeat:no-repeat; background-position:top center; padding-top:50px}
@@ -57,7 +58,7 @@ ul{ list-style-type:none;}
 .dd_p2{ color:#0c9ee2; font-size:16px; padding-top:5px}
 .dd_p3{ color:#909090; font-size:16px;padding-top:5px}
 .dd_2{width:90%;height:100px; margin-left:5%; background-color:#FFF; margin-top:3%;}
-.dd_2 img{ float:left ;margin-top:15px; margin-left:20px; }
+.dd_2 img{ float:left ;margin-top:3px; }
 /*订单管理2*/
 .gl2_k{width:100%;height:auto; margin:0 auto; background-color:#f2f2f2; padding-top:3%;}
 .gl2_bh{width:90%; margin-left:5%; background-color:#FFF;height:40px; line-height:40px; border-bottom:#cccccc 1px solid;}
@@ -86,7 +87,7 @@ ul{ list-style-type:none;}
 /*客户管理*/
 .kh ul{width:100%;height:40px; margin:0 auto; background-color:#f2f2f2}
 .kh li{ float:left; font-size:16px; line-height:40px;width:50%; text-align:center}
-.zl{width:100%;height:580px; background-color:#e6e6e6; padding-top:5%;}
+.zl{width:100%;height:auto; background-color:#e6e6e6; padding-top:5%;}
 .kh_lt{width:100%;height:auto; background-color:#FFF;}
 .kh_wd{width:90%; margin-left:5%; border-bottom:#cccccc 1px solid;height:auto;}
 .kh_p1 a{ float:left; margin-top:20px; color:#696868; font-size:14px}

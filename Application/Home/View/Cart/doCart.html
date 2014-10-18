@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link href="__PUBLIC__/css/zy.css" rel="stylesheet" type="text/css" />
+<meta id="viewport" name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,minimal-ui">
+<script src="__PUBLIC__/js/jquery.js"></script>
+<script src="__PUBLIC__/js/tool.js"></script>
+<style>
+.xiaox{width:20px;height:20px; text-align:center; background-color:#F00; color:#FFF; float:left; border-radius:50px; line-height:20px; margin-top:50px; margin-left:20px}
+.gw_xin{width:100%;height:auto; margin:0 auto}
+.gw_gm{width:90%;height:120px; background-color:#FFF; margin-left:5%; border-bottom:#CCC 1px solid;}
+.gwc_sl{ margin-top:3%; overflow:hidden}
+</style>
+<title>微店</title>
+</head>
+<body>
+<div class="box" style="margin-bottom:51px;">
+	<div class="top">
+    	<a class="tjt" href="javascript:history.go(-1)"><img src="__PUBLIC__/images/tjt_03.png"></a>
+        <a class="a1">我的购物车</a>
+        <a class="a5" href="#">刷新</a>
+    </div>
+    <div class="baik">
+    	<div class="huijt"><a href="＃"><img src="__PUBLIC__/images/huijt_03.png"></a></div>
+        <div class="huitiao"></div>	
+        <div class="dian"><img src="__PUBLIC__/images/dian_03.png">微店<span class="dian1">购物车</span></div>
+      </div>
+      <div class="gw_k">
+        <p class="gw_p1">已选购的商品</p>
+              <volist name='cart' id="vo">
+                    <div class="gw_gm">
+                        <input type='hidden' name='cart_time' value='{$vo.cart_time}'>
+                        <div class="xiaox">X</div>
+                        <img src="/WxShop/Uploads/goodsImg/{$vo.goods_id|getGoods=###,'headerImg'}">
+                        <div class="gw_z">
+                        <p class="gw_gm1">{$vo.goods_id|getGoods=###,'name'}</p>
+                        <div class="gwc_sl">
+                        <p class="gw_gm2"><span>{$vo.goods_id|getGoods=###,'retailPrice'}</span>　X</p>
+        
+                        <input type='hidden' name='goods_id' value='{$vo.goods_id}'>
+                        <input type='hidden' name='store_id' value='{$vo.goods_id|getGoods=###,"store_id"}'>
+                        <input type='hidden' name='one_price' value='0'>
+                        <input  class="gwc_s" type="text" value="{$vo.count}">
+
+
+                        </div>
+                        </div>
+                    </div>
+              </volist>
+        
+
+          <div class="gw_2">
+          		<div class="gw_zh">
+                	<p class="zh_p">已登录账号:<span>{$user_info.phone}</span></p>
+                </div>
+                <div class="gw_jy">此号码可接交易短信，登陆<span>i.vdian.com</span>可管理订单</div>
+          </div>
+          <div class="gw_rxx">收货人信息</div>
+          <div class="gw_3">
+            <form action="#" id="data">
+          		<div class="gw_r">
+                <p>收货人</p>
+                <input type='hidden' name='user_id' value='{$user_info.id}'>
+                <input type="text" name='consignee_name' value="{$user_info.name}">
+                </div>
+                <div class="gw_r">
+                <p>手机号码</p>
+                <input type="text" name='consignee_phone' value="{$user_info.phone}">
+                </div>           
+                <div class="gw_r">
+                <p>详细地址</p>
+                <input type="text" name='consignee_address' value="{$user_info.address}">
+                </div>
+                <div class="gw_r">
+                <p>用户留言</p>
+                <input type="text" name='consignee_comment' value="给卖家留言（选填）" onfocus="if(this.value='给卖家留言（选填）') this.value = ''" onblur="if(this.value == '') this.value = '给卖家留言（选填）'"  >
+                </div>
+            </form>
+          </div>
+          <div class="gw_4">
+          		<p class="gw_hj">合计（不含运费）：<span id="total_price">￥0.00</span></p>
+                <a href="#" id="check"><input type="button" value="结算"></a>
+          </div>
+      </div>
+    
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    //订单进行提交
+    $('a#check').click(function(event){
+        event.preventDefault();
+        var user_id           = $('input[name="user_id"]').val();
+        var consignee_name    = $('input[name="consignee_name"]').val();
+        var consignee_phone   = $('input[name="consignee_phone"]').val();
+        var consignee_address = $('input[name="consignee_address"]').val();
+        var consignee_comment = $('input[name="consignee_comment"]').val();
+
+        var status = 1;
+
+        $('.gw_gm').each(function(){
+            var price       = Number($(this).find('.gw_gm2 span').text());
+            var count       = Number($(this).find('input.gwc_s').val());
+            var store_id    = $(this).find('input[name="store_id"]').val();
+            var goods_id    = $(this).find('input[name="goods_id"]').val();
+            var total_price = price * count;
+          
+            $.post('__URL__/buyNowPro',{user_id:user_id,goods_id:goods_id,store_id:store_id,count:count,total_price:total_price,consignee_name:consignee_name,consignee_phone:consignee_phone,consignee_address:consignee_address,consignee_comment:consignee_comment},function(data){
+                if (!data.status) {
+                    status = 0;
+                };
+            });
+            
+        });
+
+        if (status) {
+            alert('订单处理成功，请下一步付款');
+            location.href = '__URL__/confirmOrder';
+        };
+
+    });
+
+    //计算总价格
+    function getTotalPrice(){
+        var total_price = 0;
+        $('.gw_gm').each(function(){
+            var price = Number($(this).find('.gw_gm2 span').text());
+            var count = Number($(this).find('input.gwc_s').val());
+            total_price += price*count;
+        });
+        $('#total_price').text(total_price);
+    }
+    //计算一条商品价格
+    function getOnePrice(){
+        $('.gw_gm').each(function(){
+            var price = Number($(this).find('.gw_gm2 span').text());
+            var count = Number($(this).find('input.gwc_s').val());
+            $(this).find('input[name="one_price"]').val(price*count);
+        });
+    }
+
+    $(function(){
+        getTotalPrice();
+        // getOnePrice();
+    });
+    $('input.gwc_s').change(function(){
+        getTotalPrice();
+        // getOnePrice();
+    });
+    //点击删除该商品并重新计算总金额
+    $('.xiaox').click(function(event){
+        event.preventDefault();
+        //从session中删除掉数据
+        var cart_time = $(this).siblings('input[name="cart_time"]').val();
+        $.post('__URL__/delCart',{cart_time:cart_time});
+        $(this).parent('.gw_gm').remove();
+        getTotalPrice();
+    });
+
+</script>

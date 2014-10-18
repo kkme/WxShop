@@ -180,7 +180,7 @@ class UserController extends Controller {
 				goto end;
 			}
 				$ret['status'] = true;
-				$ret['info'] = '用户登陆成功';
+				$ret['info'] = '用户登陆l成功';
 				session('user',$user);
 			end:
 			$this->ajaxReturn($ret);

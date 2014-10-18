@@ -82,7 +82,7 @@
 
             </li>
             <li class="line"><a href="{:U('Home/User/myInfoDis')}">我的微店</a></li>
-            <li class="line"><a href="gwc.html" class="shopping_cart">购物车<span class="circle">1</span></a></li>
+            <li class="line"><a href="#" class="shopping_cart">购物车<span class="circle"></span></a></li>
         </ul>     
       </div>
 
@@ -207,5 +207,27 @@
       };
     
   });
+</script>
+<script type="text/javascript">
+    $('#addToCart').click(function(event){
+      event.preventDefault();
+      var goods_id = $(this).attr('goods_id');
+      var count    = $('#J_Amount').val();
+      $.post("{:U('Home/Cart/addCart')}",{goods_id:goods_id,count:count},function(data){
+        if (data) {
+            //将数据写入购物车
+            $('.circle').text(data).show();  
+        };
+      });
+    });
+    //页面加载完毕即获取购物车数据
+    $(function(){
+        $.post("{:U('Home/Cart/getCart')}",function(data){
+        if (data) {
+            //将数据写入购物车
+            $('.circle').text(data).show();  
+        };
+      });
+    });
 </script>
 </html>

@@ -33,7 +33,7 @@
             p(phone+":"+password);
             $.post('__URL__/loginPro',{phone:phone,password:password},function(data){
                 if (data.status) {
-                    location.href = '{:U("Home/Store/shopViewDis",array("store_id"=>14))}';
+                    location.href = '{:U("Home/User/myInfoDis")}';
                 }else{
                     alert(data.info);
                 };

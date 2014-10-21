@@ -194,6 +194,22 @@
 		}
 
 		/**
+		 * 用户登出处理
+		 */
+		public function logoutPro(){
+			session('store',NULL);
+			if (empty(session('store'))) {
+				$ret['status'] = true;
+				$ret['info']   = '退出成功';
+				
+			}else{
+				$ret['status'] = false;
+				$ret['info']   = '退出失败';
+			}
+			$this->ajaxReturn($ret);
+		}
+
+		/**
 		 * 发送短信函数
 		 * @return boolen
 		 */

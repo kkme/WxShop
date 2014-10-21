@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" name="viewport" />
+<link href="__PUBLIC__/css/zy.css" rel="stylesheet" type="text/css" />
+<script src='__PUBLIC__/js/jquery.js'></script>
+<script src='__PUBLIC__/js/tool.js'></script>
+<title>微店</title>
+</head>
+<body>
+<div class="box">
+	<div class="top">
+    	<a class="tjt" href="javascript:history.go(-1)"><img src="__PUBLIC__/images/tjt_03.png"></a>
+        <a class="a1">设置</a>
+    </div>
+    <div class="sz_k">
+      <div class="sz2 checkUpdate">
+      <p><a href="#">检查升级</a></p>
+      <a href="#"><img src="__PUBLIC__/images/hjt_22.png"></a>
+      <input type="hidden" name='Code' value='1.01'>
+      </div>
+      <div class="sz2 checkUpdateContent" style='display:none'>
+          <p>当前版本为最新版本</p>
+      </div>
+      <div class="sz2">
+      <p><a href="#">求评价</a></p>
+      <a href="#"><img src="__PUBLIC__/images/hjt_22.png"></a>
+      </div>
+      <div class="sz2">
+      <p><a href="gywd.html">关于微店</a></p>
+      <a href="#"><img src="__PUBLIC__/images/hjt_22.png"></a>
+      </div>
+       <div class="sz2">
+      <p><a href="xsbz.html">新手帮助</a></p>
+      <a href="xsbz.html"><img src="__PUBLIC__/images/hjt_22.png"></a>
+      </div>
+      <div class="sz2 logout">退出登录</div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    $('.logout').click(function(){
+        $.post('{:U("Home/Regist/logoutPro")}',function(data){
+            // console.log(data);
+            if (data.status) {
+                alert(data.info);    
+                location.href = '{:U("Home/Regist/login")}';
+            }else{
+                alert(data.info);
+            };
+        });
+    });
+    $('.checkUpdate')  .click(function(){
+        //get code
+        var code = $('input[name="Code"]').val();
+        $.post("{:U('Home/Others/checkUpdate')}",{now_version:code},function(data){
+            if (data.status) {
+                $('.checkUpdateContent').show().find('p').text(data.info);
+            }else{
+                alert(data.info);
+            };
+        });
+        
+    });
+</script>

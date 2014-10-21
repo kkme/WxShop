@@ -144,9 +144,44 @@
 		 * 销售管理
 		 */
 		public function salesManageDis(){
+			//获取商家信息
+			$store = session('store');
+			if (empty($store['id'])) {
+				$this->error('请登陆后再进行操作',U('Home/Regist/login'));
+			}
+			//获取时间戳
+			$today     = strtotime('today');
+			$tomorrow  = strtotime('tomorrow');
+			$yesterday = strtotime('yesterday');
+			//获取今天的订单和交易额
+			$map['store_id']         = $store['id'];
+			$map['time']             = array('between',array($today,$tomorrow));
+			$map['status']           = 1;
+			$today_order             = M('Order')->where($map)->select();
+			$this->today_count       = count($today_order);
+			$this->today_total_price = 0;
+			foreach ($today_order as $key => $value) {
+				$this->today_total_price += $value['total_price'];
+			}
+			//获取昨天的订单和交易额
+			$map['store_id']             = $store['id'];
+			$map['time']                 = array('between',array($yesterday,$today));
+			$map['status']               = 1;
+			$yesterday_order             = M('Order')->where($map)->select();
+			$this->yesterday_count       = count($yesterday_order);
+			$this->yesterday_total_price = 0;
+			foreach ($yesterday_order as $key => $value) {
+				$this->yesterday_total_price += $value['total_price'];
+			}
 			$this->display('salesManage');
 		}
 
+		/**
+		 * 批发市场
+		 */
+		public function sellerMarketDis(){
+			$this->display('sellerMarket');
+		}
 
 
 	/*****************************************************************************************/

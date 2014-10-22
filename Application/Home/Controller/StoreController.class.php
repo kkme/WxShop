@@ -183,6 +183,53 @@
 			$this->display('sellerMarket');
 		}
 
+		/**
+		 * 促销管理
+		 */
+		public function promotionManageDis(){
+			$store = session('store');
+			if (empty($store['id'])) {
+				$this->error('请登陆后再进行操作',U('Home/Regist/login'));
+			}
+			//获取所有的促销
+			$this->promotions = M('Promotion')->where(array('store_id'=>$store['id']))->order('id desc')->select();
+			$this->display('promotionManage');
+		}
+
+		/**
+		 * 添加促销
+		 */
+		public function promotionAddDis(){
+			$store = session('store');
+			if (empty($store['id'])) {
+				$this->error('请登陆后再进行操作',U('Home/Regist/login'));
+			}
+			$this->display('promotionAdd');
+		}
+
+		/**
+		 * 添加促销处理
+		 */
+		public function promotionAddPro(){
+			//获取商家信息
+			$store = session('store');
+			if (empty($store['id'])) {
+				$this->error('请登陆后再进行操作',U('Home/Regist/login'));
+			}
+			$data['store_id']         = $store['id'];
+			$data['start_time'] = strtotime(I('start_time'));
+			$data['end_time']   = strtotime(I('end_time'));
+			$data['promotion']  = I('promotion');
+			$add_promotion = M('Promotion')->add($data);
+			if ($add_promotion) {
+				$ret['status'] = true;
+				$ret['info']   = '添加促销成功';
+			}else{
+				$ret['status'] = false;
+				$ret['info']   = '添加促销失败';
+			}
+			$this->ajaxReturn($ret);
+		}
 
 	/*****************************************************************************************/
 
@@ -208,6 +255,12 @@
 
 			//获取该商家的商品分类
 			$this->type = M('Type')->where(array('store_id'=>$this->store['id']))->select();
+
+			//获取促销信息
+			$map['store_id'] = $store_id;
+			$map['start_time'] = array('lt',time());
+			$map['end_time'] = array('gt',time());
+			$this->promotion = M('Promotion')->where($map)->order('id desc')->find();
 			$this->display('shopView');
 		}
 

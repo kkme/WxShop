@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link href="__PUBLIC__/css/zy.css" rel="stylesheet" type="text/css" />
+<meta id="viewport" name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,minimal-ui">
+<script src="__PUBLIC__/js/jquery.js"></script>
+<script src="__PUBLIC__/js/tool.js"></script>
+<title>微店</title>
+</head>
+<body>
+<div class="box" style="margin-bottom:51px;">
+	<div class="top">
+    	<a class="tjt" href="javascript:history.go(-1)"><img src="__PUBLIC__/images/tjt_03.png"></a>
+        <a class="a1">我要推广</a>
+        <a class="a5" href="#">刷新</a>
+    </div>
+    <div class="baik">
+    	<div class="huijt"><a href="javascript:history.go(-1)"><img src="__PUBLIC__/images/huijt_03.png"></a></div>
+        <div class="huitiao"></div>	
+        <div class="dian"><img src="__PUBLIC__/images/dian_03.png">微店<span class="dian1">我的订单</span></div>
+      </div>
+      <div class="wddd_k">
+           <volist name="my_orders" id="vo">
+                <div class="wddd_1">
+                    <div class="wddd_name">
+                       <p class="wddd_p1">{$vo.store_id|getStore=###,'title'}</p>
+                        <p class="wddd_p2">{$vo.time|date='Y-m-d H:m:s'}</p>
+                    </div>
+                    <div class="wddd_cp">
+                        <img src="/WxShop/Uploads/goodsImg/{$vo.goods_id|getGoods=###,'headerImg'}" style='width:70px;height:70px;'>
+                        <div class="wddd_cpm">
+                            <p class="wddd_p3">{$vo.goods_id|getGoods=###,'name'}</p>
+                            <p class="wddd_p3">数量：{$vo.count}</p>
+                        </div>
+                        <div class="wddd_jg">￥{$vo.goods_id|getGoods=###,'retailPrice'}</div>
+                    </div>
+                    <div class="wddd_sl">数量：{$vo.count}</div>
+                     <div class="wddd_sl">订单状态：
+                        <if condition="$vo.status eq 1">
+                            完成交易
+                            <else/>
+                            尚未付款
+                        </if>
+                     </div>
+                     <div class="wddd_zj">总价：<span>￥{$vo.total_price}</span></div>
+                </div>
+           </volist>
+      </div>
+</div>
+</body>
+</html>

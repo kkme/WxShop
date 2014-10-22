@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" name="viewport" />
+
+<title>促销管理-添加私密优惠</title>
+<link href="__PUBLIC__/css/weidian.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="__PUBLIC__/css/jquery-ui.css" />
+<script src='__PUBLIC__/js/jquery-1.9.1.js'></script>
+<script src='__PUBLIC__/js/jquery-ui.js'></script>
+<script src='__PUBLIC__/js/jquery-ui-timepicker-addon.js'></script>
+<script src='__PUBLIC__/js/tool.js'></script>
+<script>
+    $(function() {
+        $( "#start_time" ).datetimepicker();
+        $('#end_time').datetimepicker();
+  });
+</script>
+</head>
+
+<body>
+<div class="box">
+	<div class="top">
+    	<div class="top1"><a href="javascript:history.go(-1)"><img src="__PUBLIC__/images/tjt_03.png"></a></div>
+    	<div class="top2">添加私密优惠</div>
+        <div class="top3"><a href="#">完成</a></div>
+       
+        
+    </div>
+    <div class="cxgl">
+    	<div class="smyh">
+        	<div class="smyh1">
+                <div class="smyh1_l">折扣</div>
+                <div class="smyh1_r">
+                    <input type="text" name='promotion' style='border:none;width:90%;height:70%;margin-left:10%;margin-top:3%'/>
+                </div>
+                
+            </div>
+            <div class="smyh1">
+                <div class="smyh1_l">生效时间</div>
+                <div class="smyh1_r">
+                    <input type="text" id='start_time' name='start_time' style='border:none;width:90%;height:70%;margin-left:10%;margin-top:3%' />
+                </div>
+            </div>
+            <div class="smyh2">
+                <div class="smyh2_l">结束时间</div>
+                <div class="smyh2_r">
+                    <input type="text" id='end_time' name='end_time' style='border:none;width:90%;height:70%;margin-left:10%;margin-top:3%' />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    $('.top3 a').click(function(event){
+        event.preventDefault();
+        var promotion  = $('input[name="promotion"]').val();
+        var start_time = $('input[name="start_time"]').val();
+        var end_time   = $('input[name="end_time"]').val();
+        $.post('__URL__/promotionAddPro',{start_time:start_time,end_time:end_time,promotion:promotion},function(data){
+            if (data.status) {
+                alert(data.info);
+                location.href = '__URL__/promotionManageDis';
+            }else{
+                alert(data.info);
+            };
+        });
+    });    
+
+</script>

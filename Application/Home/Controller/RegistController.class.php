@@ -198,7 +198,7 @@
 		 */
 		public function logoutPro(){
 			session('store',NULL);
-			if (empty(session('store'))) {
+			if (session('store')) {
 				$ret['status'] = true;
 				$ret['info']   = '退出成功';
 				

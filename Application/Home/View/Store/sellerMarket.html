@@ -6,22 +6,19 @@
 
 <title>卖家市场</title>
 <link href="__PUBLIC__/css/weidian.css" rel="stylesheet" type="text/css" />
+<script src='__PUBLIC__/js/jquery.js'></script>
 </head>
 
 <body>
 <div class="box">
 	<div class="top">
-    	<div class="top1"><a href="mjsc.html"><img src="__PUBLIC__/images/tjt_03.png"></a></div>
+    	<div class="top1"><a href="javascript:history.go(-1)"><img src="__PUBLIC__/images/tjt_03.png"></a></div>
         <div class="top2">批发市场</div>
         <div class="top3"><a href="#">刷新</a></div>
     </div>
     <div class="pfsc">
-    	<div class="pfsc_con"><span><a href="#">我有货源</a></span>批发市场</div>
+    	<div class="pfsc_con"><span><a href="#" class="apply">我有货源</a></span>批发市场</div>
         <div class="pfsc_con1">
-        	<div class="pfsc_con1_l"><a href="pfscxq.html"><img src="__PUBLIC__/images/pfsc1.jpg" /></a></div>
-            <div class="pfsc_con1_r">梦加斯地毯</div>
-        </div>
-         <div class="pfsc_con1">
         	<div class="pfsc_con1_l"><a href="pfscxq.html"><img src="__PUBLIC__/images/pfsc1.jpg" /></a></div>
             <div class="pfsc_con1_r">梦加斯地毯</div>
         </div>
@@ -30,3 +27,11 @@
 </div>
 </body>
 </html>
+<script>
+    $('a.apply').click(function(event){
+        event.preventDefault();
+        //todo:需要信息不明无法确定
+        alert('您还没有通过审核，请到访问网页,提交您的店铺信息');
+    });
+</script>
+

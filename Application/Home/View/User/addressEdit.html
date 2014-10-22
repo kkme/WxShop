@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link href="__PUBLIC__/css/zy.css" rel="stylesheet" type="text/css" />
+<meta id="viewport" name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,minimal-ui">
+<script src="__PUBLIC__/js/jquery.js"></script>
+<script src='__PUBLIC__/js/tool.js'></script>
+<title>微店</title>
+</head>
+<body>
+<div class="box" style="margin-bottom:51px;">
+	<div class="top">
+    	<a class="tjt" href="javascript:history.go(-1)"><img src="__PUBLIC__/images/tjt_03.png"></a>
+        <a class="a1">编辑地址</a>
+        <a class="a5" href="#">刷新</a>
+    </div>
+    <div class="baik">
+    	<div class="huijt"><a href="javascript:history.go(-1)"><img src="__PUBLIC__/images/huijt_03.png"></a></div>
+        <div class="huitiao"></div>	
+        <div class="dian"><img src="__PUBLIC__/images/dian_03.png">微店<span class="dian1">编辑地址</span></div>
+      </div>
+      <div class="bi_k">
+            <form action='#'>
+            	<div class="bi_1">
+                	<div class="bi_sh">
+                    	<p class="bi_p1">收货人</p>
+                        <input type="text" value="{$user.name}" name='name'/>
+                    </div>
+                    <div class="bi_sh">
+                    	<p class="bi_p1">手机号</p>
+                        <input type="text" value="{$user.phone}" name='phone'/>
+
+                    </div>
+                  
+                    <div class="bi_sh">
+                    	<p class="bi_p1">详细地址</p>
+                        <input type="text" value="{$user.address}" name='address'/>
+                    </div>
+                </div>
+                <input class="di_qr" type="submit" value="确认">
+            </form>
+      </div>
+     
+</div>
+</body>
+</html>
+<script>
+    $('input[type="submit"]').click(function(event){
+        event.preventDefault();
+        $.post('__URL__/addressEditPro',$('form').serialize(),function(data){
+            if (data.status) {
+                alert('更新个人信息成功');
+                location.href = '__URL__/myInfoDis';
+            }else{
+                alert('更新个人信息失败');
+            };
+        })
+    });
+</script>

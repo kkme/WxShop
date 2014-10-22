@@ -21,6 +21,14 @@
 			}
 			$this->ajaxReturn($ret);
 		}
+
+		/**
+		 * 查看商家是否是供货商
+		 */
+		public function inSellerMarket(){
+			//to-do：需要信息不明
+		}
 	}
+
 
  ?>

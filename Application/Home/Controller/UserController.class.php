@@ -187,10 +187,70 @@ class UserController extends Controller {
 		}
 
 		/**
+		 * 用户退出处理
+		 */
+		public function logoutPro(){
+			session('user',NULL);
+			if (session('user')) {
+				$ret['status'] = false;
+				$ret['info']   = '退出失败';
+			}else{
+				$ret['status'] = true;
+				$ret['info']   = '退出成功';
+			}
+			$this->ajaxReturn($ret);
+		}
+
+		/**
 		 * 用户信息显示
 		 */
 		public function myInfoDis(){
 			$this->display('myInfo');
+		}
+
+		/**
+		 * 我的地址
+		 */
+		public function myAddressDis(){
+			$user = session('user');
+			$this->user = M('User')->where(array('id'=>$user['id']))->find();
+			$this->display('myAddress');
+		}
+
+		/**
+		 * 修改我的地址
+		 */
+		public function addressEditDis(){
+			$user = session('user');
+			$this->user = M('User')->where(array('id'=>$user['id']))->find();
+			$this->display('addressEdit');
+		}
+
+		public function addressEditPro(){
+			$user            = session('user');
+			$data['id']      = $user['id'];
+			$data['name']    = I('post.name');
+			$data['phone']   = I('post.phone');
+			$data['address'] = I('post.address');
+			$is_update = M('User')->save($data);
+			if ($is_update) {
+				$ret['status'] = true;
+				$ret['info']   = '更新信息成功';
+			}else{
+				$ret['status'] = false;
+				$ret['info']   = '更新信息失败';
+			}
+			$this->ajaxReturn($ret);
+		}
+
+		/**
+		 * 我的订单
+		 */
+		public function myOrderDis(){
+			$user = session('user');
+			$map['user_id'] = $user['id'];
+			$this->my_orders = M('Order')->where($map)->order('id desc')->select();
+			$this->display('myOrder');
 		}
 
 }

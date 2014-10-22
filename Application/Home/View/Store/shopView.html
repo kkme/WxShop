@@ -32,10 +32,10 @@
 </head>
 <body>
 <div class="box" style="margin-bottom:51px;">
-	<div class="top">
+    <div class="top">
     	<a class="tjt" href="javascript:history.go(-1);"><img src="__PUBLIC__/images/tjt_03.png"></a>
-        <a class="a1">店铺预览</a>
-        
+      <a class="a1">店铺预览</a>  
+
     </div>
     <div class="baik">
         <div class="dian"><img src="__PUBLIC__/images/dian_03.png">微店<span class="dian1">{$store['title']}</span></div>
@@ -49,6 +49,9 @@
         <div class="x_text">
         <p class="x_dm">{$store['title']}</p>
         <p class="x_wx">{$store['intro']}</p>
+          <noempty name='promotion'>
+            <p style='color:green'>开业大酬宾，全场{$promotion.promotion}折</p>
+          </noempty>
         </div>
         </div>
       </div>

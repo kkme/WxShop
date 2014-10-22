@@ -175,7 +175,7 @@ img{ border:0px;}
 .x_gwc3{width:30%; height:88px; background-color:#ce342a; float:left; line-height:88px; text-align:center;margin-left:2% }
 .x_gwc2 a,.x_gwc3 a{ color:#FFF;font-size:24px; }
 /*底部我的微店*/
-.wdwd{ float:left; width:100%; height:430px; background:#e2e2e2; margin-bottom:64px;}
+.wdwd{ float:left; width:100%; height:100%; background:#e2e2e2; margin-bottom:64px;}
 .wdwd_con{ float:left; width:80%; height:310px; margin-left:10%; background:#fff; margin-top:5%;}
 .wdwd_con dl{ float:left; width:49%; height:155px;}
 .wdwd_con dt{ float:left; width:100%; height:92px; text-align:center; margin-top:20px;}

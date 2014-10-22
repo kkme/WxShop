@@ -63,4 +63,16 @@ function getUser($user_id,$field = ''){
     }
 }
 
+/**
+ * 通过store_id获取商家信息
+ */
+function getStore($store_id,$field = ''){
+    $user = M('Store')->where(array('id'=>$store_id))->find();
+    if (empty($field)) {
+        return $user;        
+    }else{
+        return $user[$field];
+    }
+}
+
  ?>

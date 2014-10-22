@@ -3,9 +3,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" name="viewport" />
-
 <title>我的微店</title>
 <link href="__PUBLIC__/css/weidian.css" rel="stylesheet" type="text/css" />
+<script src='__PUBLIC__/js/jquery.js'></script>
+<script src='__PUBLIC__/js/tool.js'></script>
 </head>
 
 <body>
@@ -17,13 +18,13 @@
     </div>
     <div class="spxq_top">
     	<div class="spxq_top_l"><span></span><img src="__PUBLIC__/images/fxjt.jpg"  /></div>
-        <div class="spxq_top_c"> 商品详情</div>
-        <div class="spxq_top_r1"><img src="__PUBLIC__/images/tuichu.jpg" /></div>
+        <div class="spxq_top_c"> 商品详情</div>     
+        <div class="spxq_top_r1"><a href="#" id='logout'><img src="__PUBLIC__/images/tuichu.jpg" /></a></div>
     </div>
     <div class="wdwd">
     	<div class="wdwd_con">
         	<dl style="border-bottom:1px solid #ccc; border-right:1px solid #ccc;">
-            	<dt><img src="__PUBLIC__/images/icon16.jpg" width="106" height="92" /></dt>
+            	<a href="__URL__/myOrderDis"><dt><img src="__PUBLIC__/images/icon16.jpg" width="106" height="92" /></dt></a>
                 <dd>我的订单</dd>
             </dl>
             <dl style="border-bottom:1px solid #ccc;">
@@ -31,8 +32,9 @@
                 <dd>我的收藏</dd>
             </dl>
             <dl style="border-right:1px solid #ccc;">
-            	<dt><img src="__PUBLIC__/images/icon18.jpg" width="106" height="92" /></dt>
+            	<a href='__URL__/myAddressDis'><dt><img src="__PUBLIC__/images/icon18.jpg" width="106" height="92" /></dt></a>
                 <dd>收货地址</dd>
+                
             </dl>
             <dl>
             	<dt><img src="__PUBLIC__/images/icon19.jpg" width="106" height="92" /></dt>
@@ -43,3 +45,16 @@
 </div>    
 </body>
 </html>
+<script>
+    $('#logout').click(function(event){
+        event.preventDefault();
+        $.post('__URL__/logoutPro',function(data){
+            if (data.status) {
+                alert(data.info);
+                location.href = '__URL__/login';
+            }else{
+                alert(data.info);
+            };
+        });
+    });
+</script>
